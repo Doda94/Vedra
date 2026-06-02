@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bioprognoza>
+<Prognozirano>02.06.2026 u 10:59</Prognozirano>
+	<Podaci>
+		<Datum>02.06.2026</Datum>
+		<Tekst>Biometeorološke prilike će nakratko biti malo povoljnije u odnosu na prethodne dane. Ujutro će biti svježe uz moguću maglu u unutrašnjosti zbog čega bolesnike s respiratornim bolestima upozoravamo na adekvatnu zaštitu. Više sunčanog vremena danju može mnoge motivirati i podržavati radnu koncentraciju. Svima savjetujemo zaštitu od UV zračenja, laganu prehranu i dovoljno tekućine. U poslijepodnevnim satima, uz približavanje frontalnog sustava sa zapada, ponovo se može javiti umor, manjak energije te poteškoće sa snom u noći na srijedu. </Tekst>
+		<station name="istocna">2</station>
+		<station name="sredisnja">2</station>
+		<station name="gorska">2</station>
+		<station name="sjevernijadran">2</station>
+		<station name="juznijadran">2</station>
+
+	</Podaci>
+	<Podaci>
+		<Datum>03.06.2026</Datum>
+		<Tekst>Na biometeorološke prilike u cijeloj zemlji utjecat će promjenjivo i nestabilno vrijeme. Kod meteoropata se može javiti razdražljivost i glavobolja, uz manjak energije i koncentracije. Kroničnim bolesnicima može biti otežano podnošenje postojećih bolesti, stoga im se savjetuje izbjegavanje suvišnih napora i redovito uzimanje terapije.</Tekst>
+		<station name="istocna">2</station>
+		<station name="sredisnja">2</station>
+		<station name="gorska">2</station>
+		<station name="sjevernijadran">2</station>
+		<station name="juznijadran">2</station>
+
+	</Podaci>
+	<Podaci>
+		<Datum>04.06.2026</Datum>
+		<Tekst>Uz prolazno poboljšanje biometeoroloških prilika u većini krajeva kod meteoropata i kroničnih bolesnika ne očekuju se dodatne tegobe povezane s vremenom. Pojava sunčanih razdoblja kod mnogih će djelovati motivirajuće i podržavati dobro opće stanje organizma. Tijekom boravka na otvorenom svima je potrebna primjerena zaštita od UV zračenja. Na jugu zemlje uz lokalne nestabilnosti najosjetljiviji meteoropati mogu imati prolazno narušenu koncentraciju i raspoloženje.</Tekst>
+		<station name="istocna">3</station>
+		<station name="sredisnja">3</station>
+		<station name="gorska">3</station>
+		<station name="sjevernijadran">3</station>
+		<station name="juznijadran">2</station>
+
+	</Podaci>
+	<Podaci>
+		<Datum>05.06.2026</Datum>
+		<Tekst>S prolaskom novog frontalnog sustava preko naših krajeva biometeorološke prilike neće biti sasvim povoljne. Meteoropati i kronični bolesnici mogu se žaliti na oslabljenu koncentraciju, manjak radnog elana i dodatan umor.</Tekst>
+		<station name="istocna">2</station>
+		<station name="sredisnja">2</station>
+		<station name="gorska">2</station>
+		<station name="sjevernijadran">2</station>
+		<station name="juznijadran">2</station>
+
+	</Podaci>
+</Bioprognoza>

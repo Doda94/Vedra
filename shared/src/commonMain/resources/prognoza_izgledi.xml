@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<VW version="1.1" creator="DHMZ-SVAP"> 
+	<metadata>
+		<datatime>020626</datatime>
+		<creationtime>Tue Jun 02 00:00:00 2026</creationtime>
+	</metadata> 
+	<section name="All">  
+		<param name="rh_text" value="Sljedećih dana promjenjivo i nestabilno. U četvrtak pretežno sunčano, povremeno uz umjerenu naoblaku, a uglavnom na jugu još mogući kiša i pljuskovi. Ujutro mogućnost kratkotrajne magle na kopnu. U petak promjenjiva naoblaka, mjestimice pljuskovi i grmljavina, a u subotu ponovno sunčanije uz lokalne pljuskove, uglavnom u unutrašnjosti Dalmacije te na sjevernom Jadranu. Vjetar slab do umjeren jugozapadni i sjeverozapadni, u petak sjeverni, na Jadranu jugo. U subotu vjetar uglavnom slab, na sjevernom Jadranu uz obalu bura. Toplo, ponegdje vrlo toplo, ali ne i vruće.
+"/>     	
+		<station name="hr.izgledi:Kopno2"> 
+			<param name="datum" value="040626"/>			
+			<param name="vrijeme" value="2" /> 
+			<param name="Tmn" value="12" /> 
+			<param name="Tmx" value="25" /> 
+			<param name="wind" value="8" />
+			<param name="pozor" value="0" />
+		</station> 
+		<station name="hr.izgledi:Kopno3"> 
+			<param name="datum" value="050626"/>			
+			<param name="vrijeme" value="16" /> 
+			<param name="Tmn" value="14" /> 
+			<param name="Tmx" value="23" /> 
+			<param name="wind" value="1" />
+			<param name="pozor" value="0" />
+		</station> 
+		<station name="hr.izgledi:Kopno4"> 
+			<param name="datum" value="060626"/>			
+			<param name="vrijeme" value="3" /> 
+			<param name="Tmn" value="12" /> 
+			<param name="Tmx" value="24" /> 
+			<param name="wind" value="0" />
+			<param name="pozor" value="0" />
+		</station> 
+		<station name="hr.izgledi:More2"> 
+			<param name="datum" value="040626"/>			
+			<param name="vrijeme" value="2" /> 
+			<param name="Tmn" value="16" /> 
+			<param name="Tmx" value="25" /> 
+			<param name="wind" value="8" />
+			<param name="pozor" value="1" />
+		</station> 
+		<station name="hr.izgledi:More3"> 
+			<param name="datum" value="050626"/>			
+			<param name="vrijeme" value="16" /> 
+			<param name="Tmn" value="18" /> 
+			<param name="Tmx" value="25" /> 
+			<param name="wind" value="4" />
+			<param name="pozor" value="0" />
+		</station> 
+		<station name="hr.izgledi:More4"> 
+			<param name="datum" value="060626"/>			
+			<param name="vrijeme" value="3" /> 
+			<param name="Tmn" value="18" /> 
+			<param name="Tmx" value="26" /> 
+			<param name="wind" value="0" />
+			<param name="pozor" value="0" />
+		</station> 
+
+	</section>
+</VW>
+

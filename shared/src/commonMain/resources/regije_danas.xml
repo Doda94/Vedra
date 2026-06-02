@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<regije_danas>
+  <datum>02.06.2026.</datum>
+  <istocna>
+    Pretežno sunčano, mjestimice umjerena naoblaka, osobito ujutro te povremeno prema večeri. Puhat će slab do umjeren zapadni i sjeverozapadni vjetar. Najviša dnevna temperatura od od 24 do 26 °C.
+  </istocna>
+  <sredisnja>
+    Pretežno sunčano, povremeno uz malu i umjerenu naoblaku, a navečer i u noći postupan porast naoblake sa zapada. Vjetar slab, od sredine dana do umjeren južni i jugozapadni. Ujutro mjestimice magla. Najviša dnevna temperatura od 24 do 27 °C.
+  </sredisnja>
+  <sjjadran>
+    Pretežno sunčano, povremeno umjerena naoblaka. Poslijepodne naoblačenje, navečer i u noći mjestimice kiša i pljuskovi s grmljavinom, lokalno moguće izraženiji. Ujutro slaba bura, zatim će jugo postupno jačati na umjereno, navečer ponegdje i jako, uz zapadnu obalu Istre i jugozapadnjak. Najviša dnevna temperatura između 24 i 27 °C.
+  </sjjadran>
+  <gorska>
+    U prvom dijelu dana pretežno sunčano, a zatim porast naoblake, a navečer i osobito u noći mjestimice kiša, mogući su i pljuskovi s grmljavinom. Ujutro po kotlinama magla. Vjetar slab, u drugom dijelu dana u višim predjelima umjeren jugozapadni. Najviša dnevna temperatura od 21 do 25 °C.
+  </gorska>
+  <dalmacija>
+    Pretežno sunčano, ponegdje uz umjerenu naoblaku. Navečer na sjeveru Dalmacije porast naoblake, a u noći mogućnost za mjestimičnu kišu i pljuskove s grmljavinom. Puhat će slab do umjeren jugozapadni i južni vjetar, a navečer jugo koje će postupno jačati. Najviša dnevna temperatura od 26 do 29 °C.
+  </dalmacija>
+  <istra>
+    Pretežno sunčano uz malu do umjerenu naoblaku, poslijepodne sa zapada stiže porast naoblake koji već tada mjestimice može donijeti slabu kišu, a od privečer i pljuskove s grmljavinom. Puhat će slabo do umjereno jugo i jugozapadni vjetar, prema kraju dana u jačanju. More će biti mirno do malo valovito, kroz dan u snaženju. Najviša dnevna temperatura zraka bit će od 25 do 28 °C.
+  </istra>
+</regije_danas>

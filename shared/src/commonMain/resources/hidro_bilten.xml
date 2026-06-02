@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hidro_bilten>
+ <period_prognoze>2.6.2026.</period_prognoze>
+ <datum_upisa>02.06.2026.</datum_upisa>
+ <vrijeme_upisa>08:22</vrijeme_upisa>
+ <upozorenje>Prognozirana obilna oborina koja može biti praćena grmljavinskim pljuskovima, moguća u noći (2./3.6.2026.) na području sjevernog Jadrana, Gorskog kotara i Like te tijekom sutrašnjeg dana (3.6.2026.) i na području Dalmacije i njezine unutrašnjosti može izazvati pojavu bujičnih i urbanih poplava. </upozorenje>
+ <sava>Vodostaji Save do Rugvice su u opadanju s tendencijom porasta. Nizvodno do Crnca vodostaji su u porastu s tendencijom porasta. Nizvodno do Jasenovca vodostaji su u stagnaciji s tendencijom porasta. Nizvodno do Mačkovca vodostaji su u blagom opadanju s tendencijom stagnacije. Nizvodno su vodostaji u blagom opadanju s tendencijom blagog opadanja. Vodostaji su u domeni niskih voda. </sava>
+ <kupa>Vodostaji Kupe do Karlovca su u stagnaciji s tendencijom stagnacije. Ovisno o kiši koja se očekuje tijekom noći i sutrašnjeg dana, očekuje se porast vodostaja. Nizvodno do Jamničke Kiselice vodostaji su u porastu s tendencijom opadanja. Nizvodno su vodostaji u stagnaciji s tendencijom blagog porasta. Vodostaji su u domeni niskih voda. </kupa>
+ <dunav>Vodostaji Dunava do Aljmaša su u stagnaciji s tendencijom stagnacije. Nizvodno su vodostaji u blagom porastu s tendencijom stagnacije. Vodostaji su u domeni niskih voda.</dunav>
+ <mura>Vodostaji Mure su u stagnaciji s tendencijom stagnacije, u domeni niskih voda.</mura>
+ <drava>Vodostaji Drave do Terezinog Polja su u opadanju s tendencijom blagog porasta. Zbog djelovanja hidroelektrana moguće su oscilacije vodostaja. Nizvodno do Podravske Moslavine vodostaji su u porastu s tendencijom blagog porasta. Nizvodno do Osijeka vodostaji su u opadanju s tendencijom porasta. Nizvodno su vodostaji u opadanju s tendencijom opadanja. Vodostaji su u domeni niskih voda. </drava>
+</hidro_bilten>

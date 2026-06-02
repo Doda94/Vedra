@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Temperature_mora>
+	<Copyright>DHMZ - meteo.hr</Copyright>
+	<Datum>02.06.2026</Datum>
+	<Podatci>
+		<Postaja autom="0">Postaja \ Termin mjerenja</Postaja>
+		<Termin>07</Termin>
+		<Termin>08</Termin>
+		<Termin>11</Termin>
+		<Termin>14</Termin>
+		<Termin>15</Termin>
+		<Termin>17</Termin>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="0">Božava</Postaja>
+		<Termin>19.6</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Crikvenica</Postaja>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Dubrovnik</Postaja>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="0">Komiža</Postaja>
+		<Termin/>
+		<Termin>20.5</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Mali Losinj</Postaja>
+		<Termin>20.3</Termin>
+		<Termin>20.4</Termin>
+		<Termin>20.9</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Malinska</Postaja>
+		<Termin>22.4</Termin>
+		<Termin>22.4</Termin>
+		<Termin>22.2</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Mljet-Malo jezero</Postaja>
+		<Termin>24.0</Termin>
+		<Termin>23.9</Termin>
+		<Termin>24.2</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Mljet-Veliko jezero</Postaja>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Mljet-otvoreno more</Postaja>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin>-</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Opatija</Postaja>
+		<Termin>19.9</Termin>
+		<Termin>20.2</Termin>
+		<Termin>20.6</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="0">Pula</Postaja>
+		<Termin/>
+		<Termin>22.2</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="0">Rab</Postaja>
+		<Termin/>
+		<Termin>20.6</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="0">Rovinj-Sv.Ivan n/p</Postaja>
+		<Termin/>
+		<Termin>21.6</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="0">Split</Postaja>
+		<Termin/>
+		<Termin>21.2</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="0">Šibenik</Postaja>
+		<Termin/>
+		<Termin>20.0</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1">Zadar</Postaja>
+		<Termin>21.4</Termin>
+		<Termin>21.4</Termin>
+		<Termin>21.7</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+</Temperature_mora>

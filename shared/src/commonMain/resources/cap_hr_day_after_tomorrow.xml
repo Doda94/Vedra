@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alert xmlns="urn:oasis:names:tc:emergency:cap:1.2">
+	<identifier>2.49.0.0.191.0.HR.260602075602.LDZM</identifier>
+	<sender>https://meteo.hr</sender>
+	<sent>2026-06-02T07:56:02+02:00</sent>
+	<status>Actual</status>
+	<msgType>Alert</msgType>
+	<scope>Public</scope>
+	<info>
+		<language>hr</language>
+		<category>Met</category>
+		<event>Žuto upozorenje za grmljavinsku oluju</event>
+		<responseType>None</responseType>
+		<urgency>Future</urgency>
+		<severity>Moderate</severity>
+		<certainty>Likely</certainty>
+		<onset>2026-06-04T00:00:00+02:00</onset>
+		<expires>2026-06-04T06:00:00+02:00</expires>
+		<senderName>DHMZ Državni hidrometeorološki zavod</senderName>
+		<description>Lokalno mogući izraženiji pljuskovi s grmljavinom. Vjerojatnost grmljavine &gt; 60 %</description>
+		<instruction>  BUDITE NA OPREZU zbog mogućih jačih grmljavinskih nevremena. Posebno pripazite u izloženim područjima kao što su planine, šume i livade odnosno otvoreni tereni. Mogući su prekidi u aktivnostima na otvorenom.
+		</instruction>
+		<parameter>
+			<valueName>awareness_level</valueName>
+			<value>2; yellow; Moderate</value>
+		</parameter>
+		<parameter>
+			<valueName>awareness_type</valueName>
+			<value>3; Thunderstorm</value>
+		</parameter>
+		<area>
+			<areaDesc>Dubrovačka regija</areaDesc>
+			<geocode>
+				<valueName>EMMA_ID</valueName>
+				<value>HR007</value>
+			</geocode>
+		</area>
+	</info>
+	<info>
+		<language>en</language>
+		<category>Met</category>
+		<event>Yellow thunderstorm warning</event>
+		<responseType>None</responseType>
+		<urgency>Future</urgency>
+		<severity>Moderate</severity>
+		<certainty>Likely</certainty>
+		<onset>2026-06-04T00:00:00+02:00</onset>
+		<expires>2026-06-04T06:00:00+02:00</expires>
+		<senderName>DHMZ Državni hidrometeorološki zavod</senderName>
+		<description>Locally  possible severe thundershowers. Lightning risk &gt; 60 %</description>
+		<instruction>  STAY ALERT for possible heavy thunderstorms. Be especially careful in high-exposure areas such as mountains, forests, meadows and open grounds. Interruptions in outdoor activities are possible.
+		</instruction>
+		<parameter>
+			<valueName>awareness_level</valueName>
+			<value>2; yellow; Moderate</value>
+		</parameter>
+		<parameter>
+			<valueName>awareness_type</valueName>
+			<value>3; Thunderstorm</value>
+		</parameter>
+		<area>
+			<areaDesc>Dubrovnik region</areaDesc>
+			<geocode>
+				<valueName>EMMA_ID</valueName>
+				<value>HR007</value>
+			</geocode>
+		</area>
+	</info>
+</alert>

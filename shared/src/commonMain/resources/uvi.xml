@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UV_indeks>
+	<Copyright>DHMZ - meteo.hr</Copyright>
+	<Datum>02.06.2026</Datum>
+	<Podatci>
+		<Postaja>Postaja \ Termin mjerenja </Postaja>
+		<Termin>06</Termin>
+		<Termin>07</Termin>
+		<Termin>08</Termin>
+		<Termin>09</Termin>
+		<Termin>10</Termin>
+		<Termin>11</Termin>
+		<Termin>12</Termin>
+		<Termin>13</Termin>
+		<Termin>14</Termin>
+		<Termin>15</Termin>
+		<Termin>16</Termin>
+		<Termin>17</Termin>
+		<Termin>18</Termin>
+		<Termin>19</Termin>
+		<Termin>20</Termin>
+		<Termin>21</Termin>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="2 m">Crikvenica</Postaja>
+		<Termin boja="#DBECFD">0.1</Termin>
+		<Termin boja="#DBECFD">0.4</Termin>
+		<Termin boja="#00FF00">1.2</Termin>
+		<Termin boja="#00FF00">2.8</Termin>
+		<Termin boja="#FFFF00">4.2</Termin>
+		<Termin boja="#FFFF00">5.6</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="154 m">Daruvar</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.3</Termin>
+		<Termin boja="#00FF00">1.0</Termin>
+		<Termin boja="#00FF00">2.1</Termin>
+		<Termin boja="#FFFF00">3.0</Termin>
+		<Termin boja="#FFFF00">4.7</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="53 m">Dubrovnik</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.3</Termin>
+		<Termin boja="#00FF00">1.0</Termin>
+		<Termin boja="#00FF00">2.0</Termin>
+		<Termin boja="#FFFF00">3.5</Termin>
+		<Termin boja="#FFFF00">4.8</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="568 m">Gospić</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.9</Termin>
+		<Termin boja="#00FF00">2.1</Termin>
+		<Termin boja="#FFFF00">3.5</Termin>
+		<Termin boja="#FFFF00">4.8</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="248 m">Knin</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.9</Termin>
+		<Termin boja="#00FF00">2.0</Termin>
+		<Termin boja="#FFFF00">3.4</Termin>
+		<Termin boja="#FFFF00">4.7</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="47 m">Komiža</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.8</Termin>
+		<Termin boja="#00FF00">1.9</Termin>
+		<Termin boja="#FFFF00">3.0</Termin>
+		<Termin boja="#FFFF00">4.1</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="163 m">Križevci</Postaja>
+		<Termin boja="#DBECFD">0.1</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.8</Termin>
+		<Termin boja="#00FF00">2.2</Termin>
+		<Termin boja="#FFFF00">3.5</Termin>
+		<Termin boja="#FFFF00">4.7</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="49 m">Makarska</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.6</Termin>
+		<Termin boja="#00FF00">1.7</Termin>
+		<Termin boja="#00FF00">2.9</Termin>
+		<Termin boja="#FFFF00">4.3</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="101 m">Mali Lošinj</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.8</Termin>
+		<Termin boja="#00FF00">2.0</Termin>
+		<Termin boja="#FFFF00">3.3</Termin>
+		<Termin boja="#FFFF00">4.5</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="1 m">Malinska</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.1</Termin>
+		<Termin boja="#DBECFD">0.5</Termin>
+		<Termin boja="#00FF00">1.1</Termin>
+		<Termin boja="#00FF00">2.7</Termin>
+		<Termin boja="#FFFF00">4.1</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="39 m">Novigrad Istra</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.7</Termin>
+		<Termin boja="#00FF00">1.5</Termin>
+		<Termin boja="#00FF00">2.7</Termin>
+		<Termin boja="#FFFF00">4.4</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="332 m">Ogulin</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.8</Termin>
+		<Termin boja="#00FF00">1.9</Termin>
+		<Termin boja="#FFFF00">3.1</Termin>
+		<Termin boja="#FFFF00">4.6</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="5 m">Opatija</Postaja>
+		<Termin boja="#DBECFD">0.1</Termin>
+		<Termin boja="#DBECFD">0.4</Termin>
+		<Termin boja="#DBECFD">0.9</Termin>
+		<Termin boja="#00FF00">2.8</Termin>
+		<Termin boja="#FFFF00">3.8</Termin>
+		<Termin boja="#FFFF00">5.1</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="96 m">Osijek</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#00FF00">1.0</Termin>
+		<Termin boja="#00FF00">2.1</Termin>
+		<Termin boja="#FFFF00">3.2</Termin>
+		<Termin boja="#FFFF00">4.8</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="869 m">Parg</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.9</Termin>
+		<Termin boja="#00FF00">2.1</Termin>
+		<Termin boja="#FFFF00">3.2</Termin>
+		<Termin boja="#FFFF00">4.9</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="296 m">Pazin</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.7</Termin>
+		<Termin boja="#00FF00">1.6</Termin>
+		<Termin boja="#FFFF00">3.0</Termin>
+		<Termin boja="#FFFF00">4.5</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="124 m">Rijeka</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.8</Termin>
+		<Termin boja="#00FF00">1.9</Termin>
+		<Termin boja="#FFFF00">3.1</Termin>
+		<Termin boja="#FFFF00">4.5</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="95 m">Slavonski Brod</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#00FF00">1.0</Termin>
+		<Termin boja="#00FF00">2.1</Termin>
+		<Termin boja="#FFFF00">3.4</Termin>
+		<Termin boja="#FFFF00">4.7</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="172 m">Varaždin</Postaja>
+		<Termin boja="#DBECFD">-</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.9</Termin>
+		<Termin boja="#00FF00">2.0</Termin>
+		<Termin boja="#FFFF00">3.3</Termin>
+		<Termin boja="#FFFF00">4.6</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+	<Podatci>
+		<Postaja autom="1" ndm="133 m">Zagreb - Maksimir</Postaja>
+		<Termin boja="#DBECFD">0.1</Termin>
+		<Termin boja="#DBECFD">0.2</Termin>
+		<Termin boja="#DBECFD">0.5</Termin>
+		<Termin boja="#00FF00">1.8</Termin>
+		<Termin boja="#FFFF00">3.2</Termin>
+		<Termin boja="#FFFF00">4.4</Termin>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+		<Termin/>
+	</Podatci>
+</UV_indeks>

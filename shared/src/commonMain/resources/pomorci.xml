@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prognoza_pomorci>
+	<Copyright>DHMZ - meteo.hr</Copyright>
+	<Naslov>VREMENSKO IZVJEŠĆE, dan 02.06.2026 u 06:00 sati</Naslov>
+	<Upozorenje>U noći na sjevernom Jadranu, a sutra i drugdje mjestimice udari SE i S vjetra 35-40 čvorova. Moguće su nevere. 	</Upozorenje>
+	<Stanje>Jadranu se sa sjeverozapada približava dolina s frontalnim poremećajem. 	</Stanje>
+	<Prognoza_zaglavlje>Vremenska prognoza za sljedeća 24 sata, vrijedi do: 03.06.2026 u 06 sati</Prognoza_zaglavlje>
+	<Prognoza_naslov>Sjeverni Jadran</Prognoza_naslov>
+	<Prognoza_tekst>Vjetar SE i S 4-14, poslijepodne u postupnom jačanju na 10-20, u noći mjestimice do 24 čvora. Sutra zapadno od Istre N vjetar 6-16 čvorova. More 2-3, u noći mjestimice 4. Vidljivost 10-20 km. Promjenjivo oblačno, moguća je kiša i pljuskovi s grmljavinom. 	</Prognoza_tekst>
+	<Prognoza_naslov>Srednji Jadran</Prognoza_naslov>
+	<Prognoza_tekst>Vjetar SE i S 4-14, poslijepodne će jačati na 8-18, sutra mjestimice do 24 čvora. More 2-3, u noći mjestimice 4. Vidljivost 10-20 km. Promjenjivo oblačno, moguća je kiša i pljuskovi s grmljavinom, osobito sutra. 	</Prognoza_tekst>
+	<Prognoza_naslov>Južni Jadran</Prognoza_naslov>
+	<Prognoza_tekst>Vjetar SE i S 4-14, na krajnjem jugu, a sutra i drugdje do 18, mjestimice do 22 čvora. More 2-3, u noći mjestimice 4. Vidljivost 10-20 km. Promjenjivo oblačno, mjestimice kiša, a mogući su i pljuskovi s grmljavinom. 	</Prognoza_tekst>
+	<Tablica>
+		<Tablica_zaglavlje>Vrijeme na Jadranu u 05 sati</Tablica_zaglavlje>
+		<Podaci>
+			<Postaja>Rijeka</Postaja>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+		</Podaci>
+		<Podaci>
+			<Postaja>Senj</Postaja>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+		</Podaci>
+		<Podaci>
+			<Postaja>Mali Lošinj</Postaja>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+		</Podaci>
+		<Podaci>
+			<Postaja>Zadar</Postaja>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+		</Podaci>
+		<Podaci>
+			<Postaja>Split</Postaja>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+			<Termin/>
+		</Podaci>
+		<Podaci>
+			<Postaja>Palagruža</Postaja>
+			<Termin>N 8</Termin>
+			<Termin>2</Termin>
+			<Termin>20</Termin>
+			<Termin>1/2 OBLAČNO</Termin>
+			<Termin>1015</Termin>
+		</Podaci>
+		<Podaci>
+			<Postaja>Dubrovnik</Postaja>
+			<Termin>NW 4</Termin>
+			<Termin>1</Termin>
+			<Termin>20</Termin>
+			<Termin>1/4 OBLAČNO</Termin>
+			<Termin>1013</Termin>
+		</Podaci>
+	</Tablica>
+</Prognoza_pomorci>

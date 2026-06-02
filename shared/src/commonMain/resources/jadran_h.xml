@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Prognoza_jadran>
+	<Copyright>DHMZ - meteo.hr</Copyright>
+	<Naslov>Izvješće Službe Pomorskog meteorološkog centra Split DHMZ-a dana 02.06.2026. u 06 sati</Naslov>
+	<Upozorenje>
+		<Upozorenje_naslov>Upozorenje</Upozorenje_naslov>
+		<Upozorenje_tekst>U noći na sjevernom Jadranu, a sutra i drugdje mjestimice udari juga i južnog vjetra 35-40 čvorova. Moguće su nevere. 		</Upozorenje_tekst>
+	</Upozorenje>
+	<Stanje>
+		<Stanje_naslov>Stanje</Stanje_naslov>
+		<Stanje_tekst>Jadranu se sa sjeverozapada približava dolina s frontalnim poremećajem. 		</Stanje_tekst>
+	</Stanje>
+	<Prognoza_naslov>Vremenska prognoza za Jadran za prvih 12 sati</Prognoza_naslov>
+	<Prognoza_tekst>Jugo i južni vjetar 4-14, poslijepodne će jačati na 8-18 čvorova. More 2-3. Vidljivost 10-20 km. Promjenjivo oblačno, mjestimice kiša, a mogući su i pljuskovi s grmljavinom. 	</Prognoza_tekst>
+	<Prognoza_naslov>Vremenska prognoza za sljedećih 12 sati</Prognoza_naslov>
+	<Prognoza_tekst>Umjereno do pojačano, mjestimice i jako jugo i južni vjetar. Sutra zapadno od Istre slab do umjeren sjeverni vjetar. More malo do umjereno valovito, mjestimice i valovito. Promjenjivo oblačno, mjestimice kiša i pljuskovi s grmljavinom. 	</Prognoza_tekst>
+</Prognoza_jadran>
