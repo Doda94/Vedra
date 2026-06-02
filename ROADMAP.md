@@ -14,6 +14,15 @@ Treat each phase as a self‑contained study session (1–4 hours).
   `LocalDhmzDataSource`, `WeatherRepository`, `FeelsLike` util.
 - Unit tests for parsers + XML reader + feels‑like.
 
+## 🟡 Phase 1 — partially done
+- ✅ Theme files in place: `Color.kt` (full M3 light/dark schemes derived from
+  `#2196F3 / #607D8B / #DB7900 / #73777E`), `Type.kt` (Manrope for
+  display/headline/title, Inter 18pt for body/label), `Theme.kt`
+  (`VedraTheme` composable with dynamic-color support on Android 12+).
+- ✅ Fonts bundled in `res/font/` (14 files, ~1.3 MB).
+- ⏳ Wire `VedraTheme` into `MainActivity.setContent { ... }` and render a
+  first "Hello Vedra" `Scaffold + TopAppBar` body.
+
 You can call `WeatherRepository().sevenDayForecastFor("ZAGREB-GRIČ")` from
 any Compose screen today. Everything below is the path from data → app.
 
@@ -29,10 +38,17 @@ any Compose screen today. Everything below is the path from data → app.
 - Edge‑to‑edge / `WindowCompat.setDecorFitsSystemWindows`.
 
 **Tasks:**
-1. In `composeApp/src/commonMain/kotlin/hr/doda/vedra/App.kt`, replace the placeholder with a `Scaffold` + `TopAppBar` + body.
-2. Create `ui/theme/VedraTheme.kt` with light/dark color schemes (use weather‑inspired colors).
-3. Add `composeApp/src/androidMain/kotlin/hr/doda/vedra/ui/theme/Color.android.kt` to provide dynamic color on Android 12+.
-4. Render a hard‑coded "Hello Vedra" home screen.
+1. ✅ Theme files in `composeApp/src/androidMain/kotlin/hr/doda/vedra/ui/theme/`:
+   `Color.kt` (full M3 light/dark schemes derived from the 4 brand seeds),
+   `Type.kt` (Manrope for display/headline/title, Inter 18pt for body/label),
+   `Theme.kt` (`VedraTheme` composable with dynamic-color support on
+   Android 12+).
+2. ⏳ In `MainActivity.onCreate`, call `setContent { VedraTheme { /* … */ } }`
+   and render a `Scaffold` + `TopAppBar` + body.
+3. ⏳ Drop a hard-coded "Hello Vedra" centred `Text` styled with
+   `MaterialTheme.typography.displayMedium`.
+4. ⏳ Enable edge-to-edge with `enableEdgeToEdge()` and verify both light
+   and dark system bars look correct.
 
 **Done when:** App runs on an Android emulator with consistent theming, including dark mode toggle. (iOS gets its own SwiftUI implementation in phase 17 — for now you can leave the iOS app as the template stub.)
 

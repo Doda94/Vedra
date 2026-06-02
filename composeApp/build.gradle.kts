@@ -30,6 +30,7 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(projects.shared)
+            implementation(libs.androidx.ui.text.google.fonts)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
