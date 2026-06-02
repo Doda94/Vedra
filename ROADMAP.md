@@ -9,7 +9,7 @@ Treat each phase as a self‑contained study session (1–4 hours).
 ---
 
 ## ✅ Already in place (phase 0)
-- KMP project (Android + iOS), Compose Multiplatform.
+- KMP project with shared business logic in Kotlin; Android UI in Compose, iOS UI in SwiftUI.
 - `shared` module with: XML parser, domain models, 15 file parsers,
   `LocalDhmzDataSource`, `WeatherRepository`, `FeelsLike` util.
 - Unit tests for parsers + XML reader + feels‑like.
@@ -34,7 +34,7 @@ any Compose screen today. Everything below is the path from data → app.
 3. Add `composeApp/src/androidMain/kotlin/hr/doda/vedra/ui/theme/Color.android.kt` to provide dynamic color on Android 12+.
 4. Render a hard‑coded "Hello Vedra" home screen.
 
-**Done when:** App runs on Android emulator and an iOS simulator with consistent theming, including dark mode toggle.
+**Done when:** App runs on an Android emulator with consistent theming, including dark mode toggle. (iOS gets its own SwiftUI implementation in phase 17 — for now you can leave the iOS app as the template stub.)
 
 **Interview talking points:** *"Why is recomposition skipped for stable parameters?"*, *"How does Compose differ from XML/View system?"*, *"What is the difference between `remember` and `rememberSaveable`?"*
 
@@ -86,7 +86,7 @@ any Compose screen today. Everything below is the path from data → app.
 - Pick **Koin** (works in KMP). Add `io.insert-koin:koin-core` to `commonMain` and `koin-androidx-compose` to Android.
 - Create `shared/.../di/SharedModule.kt` with `single { LocalDhmzDataSource() }` and `single { WeatherRepository(get()) }`.
 - Create `composeApp/.../di/AppModule.kt` with `viewModel { HomeViewModel(get()) }`.
-- Initialize Koin in `MainActivity.onCreate` (Android) and an `iosMain` `initKoin()` helper.
+- Initialize Koin in `MainActivity.onCreate` (Android). For iOS, expose an `initKoin()` top-level function in `iosMain` that SwiftUI can call from `@main App.init` later (phase 17).
 - Replace any direct `WeatherRepository()` constructions with injected instances.
 
 **Done when:** No `new WeatherRepository()` calls exist in UI code; ViewModels are obtained via `koinViewModel()`.
@@ -180,7 +180,7 @@ any Compose screen today. Everything below is the path from data → app.
 ## Phase 8 — Networking layer (replace local data source)
 
 **Concepts:**
-- **Ktor client**: engines per platform (`OkHttp` Android / `Darwin` iOS).
+- **Ktor client**: engines per platform (`OkHttp` Android / `Darwin` iOS — both consumed by the shared module).
 - Logging, timeout, retry/backoff strategies.
 - Error model: `Result<Failure, Success>` or sealed `DataError`.
 - Caching: HTTP cache vs **app cache** with timestamps.
@@ -360,7 +360,7 @@ any Compose screen today. Everything below is the path from data → app.
 
 ---
 
-## Phase 17 — Stretch goals
+## Phase 17 — Stretch goals (Android side)
 
 - **Widget** showing current temperature + symbol on the Android home screen (Glance API).
 - **Wear OS** companion module showing alerts.
@@ -368,7 +368,112 @@ any Compose screen today. Everything below is the path from data → app.
 - **Crashlytics** + Firebase Performance.
 - **A/B test** different forecast layouts via Remote Config.
 - Add **astronomical** computations (sunrise/sunset/golden hour) from lat/lon.
-- **Compose Multiplatform iOS** — actually ship the iOS build.
+
+---
+
+## Phase 18 — Ship the iOS app with SwiftUI
+
+This is where the KMP investment pays off: the entire `shared` module
+(parsers, repository, domain models, networking, caching, use‑cases) is
+already callable from Swift — you only need to write the UI layer in
+SwiftUI plus a thin Swift presentation layer.
+
+**Concepts to master:**
+- How Kotlin types are exported to Swift: classes, sealed classes,
+  enums, suspend functions, `Flow`, generics. Read about
+  [Kotlin/Native interop](https://kotlinlang.org/docs/native-objc-interop.html)
+  and the **`Shared` framework**.
+- **SwiftUI fundamentals**: `View`, `@State`, `@Binding`, `@StateObject`,
+  `@ObservedObject`, `@EnvironmentObject`, `@Observable` (iOS 17+).
+- **`async`/`await`** in Swift, `Task { }`, structured concurrency,
+  `@MainActor`.
+- Bridging Kotlin `Flow` → Swift `AsyncSequence` (use **KMP-NativeCoroutines**
+  or roll a small wrapper).
+- **MVVM in SwiftUI**: an `ObservableObject` per screen that wraps a
+  Kotlin use‑case and republishes its state on the main actor.
+- iOS lifecycle: `App`, `Scene`, `@main`, `WindowGroup`.
+- **Navigation**: `NavigationStack` + `NavigationPath` (iOS 16+),
+  type‑safe destinations.
+- iOS theming: `ColorScheme`, dynamic type, SF Symbols, `.tint()`,
+  light/dark assets.
+- Push notifications on iOS: `UNUserNotificationCenter`, APNs, the
+  `UIApplicationDelegate` shim from a SwiftUI `App`.
+- Localization: `String(localized:)`, `.strings` / `.xcstrings` catalog,
+  language fallback rules.
+- Accessibility: `.accessibilityLabel`, VoiceOver, Dynamic Type.
+
+**Tasks:**
+1. **Verify the framework export.** In `shared/build.gradle.kts`, the
+   iOS targets already produce a `Shared.framework`. Run
+   `./gradlew :shared:linkDebugFrameworkIosSimulatorArm64` and confirm
+   the output appears under `shared/build/bin/...`. Open `iosApp` in
+   Xcode and make sure the framework is linked (it is in the template).
+2. **Choose a Flow bridge.** Add the
+   [KMP-NativeCoroutines](https://github.com/rickclephas/KMP-NativeCoroutines)
+   plugin to the shared module, annotate public `suspend`/`Flow`
+   APIs with `@NativeCoroutines`, and consume them from Swift via
+   `AsyncSequence`.
+3. **Skeleton the SwiftUI app.** In `iosApp`, create:
+   ```
+   iosApp/
+   ├── VedraApp.swift            // @main, calls initKoin()
+   ├── Theme/
+   │   ├── Colors.swift          // mirrors Android color tokens
+   │   └── WeatherIcons.swift    // SF Symbol map for DHMZ codes
+   ├── Common/
+   │   ├── UiState.swift         // sealed-style enum (loading/success/error)
+   │   └── FlowExtensions.swift  // Kotlin Flow → AsyncSequence helpers
+   ├── Features/
+   │   ├── Home/HomeView.swift + HomeViewModel.swift
+   │   ├── Forecast/...
+   │   ├── Alerts/...
+   │   ├── CityPicker/...
+   │   ├── Marine/...
+   │   └── Indices/...
+   └── Navigation/Router.swift
+   ```
+4. **Reach parity** with the Android app, screen by screen, in this order:
+   Home → CityPicker → Forecast detail → Alerts → Marine → Indices →
+   Europe → Settings.
+5. **Reuse, don't re-implement.** Each SwiftUI ViewModel injects a
+   shared use‑case (e.g. `GetHomeWeatherUseCase`) and exposes
+   `@Published var state: HomeUiState`. Do not re-parse XML, do not
+   re-write feels-like math, do not duplicate networking — all of that
+   stays in Kotlin.
+6. **iOS-native polish:**
+   - Use `WeatherKit` SF Symbols (`sun.max.fill`, `cloud.bolt.rain.fill`,
+     etc.) for DHMZ symbol codes — much nicer than rasters.
+   - Pull-to-refresh with the built-in `.refreshable { ... }`.
+   - Haptics for severe alerts (`UIImpactFeedbackGenerator`).
+   - **Live Activities** (Dynamic Island) for active red alerts.
+   - **iOS Widget Extension** mirroring the Android Glance widget.
+7. **Push notifications.** When the cross-platform sync detects a
+   matching CAP alert, schedule a local notification on iOS via
+   `UNUserNotificationCenter`. (Real APNs server is out of scope for
+   a portfolio app.)
+
+**Done when:**
+- The iOS app builds and runs on iOS 17+ simulator and a physical
+  device.
+- All major screens shipped on Android also exist on iOS, hitting the
+  same shared business logic.
+- VoiceOver navigates the home screen end‑to‑end.
+- The HR & EN locales both work via an `.xcstrings` catalog.
+- A red CAP alert triggers a local notification and a Live Activity.
+
+**Interview talking points:**
+- *"Why ship native UI on each platform instead of Compose Multiplatform?"*
+  (Trade-off: native look & feel + access to platform-only APIs vs. UI
+  reuse — argue for native UI in a portfolio context.)
+- *"How does Kotlin's `sealed class` map to Swift?"* (As a class with
+  nested classes — you have to `switch` on it manually since Swift
+  doesn't get exhaustive matching for free.)
+- *"How do you safely call a `suspend` Kotlin function from Swift?"*
+  (Continuations are auto-bridged to `async`; cancellation requires
+  KMP-NativeCoroutines or manual `Task` cancellation propagation.)
+- *"What is `@MainActor` and why does the iOS ViewModel need it?"*
+- *"Differences between SwiftUI's `@State`, `@StateObject`,
+  `@ObservedObject` and `@Environment`."*
 
 ---
 
@@ -382,16 +487,20 @@ any Compose screen today. Everything below is the path from data → app.
 
 ## Suggested rough timeline (1 phase per evening, weekends 2)
 
-| Week | Phases |
-|------|--------|
-| 1    | 1, 2, 3 |
-| 2    | 4, 5    |
-| 3    | 6, 7    |
-| 4    | 8, 9    |
-| 5    | 10, 11  |
-| 6    | 12, 13  |
-| 7    | 14      |
-| 8    | 15, 16  |
+| Week  | Phases |
+|-------|--------|
+| 1     | 1, 2, 3 |
+| 2     | 4, 5    |
+| 3     | 6, 7    |
+| 4     | 8, 9    |
+| 5     | 10, 11  |
+| 6     | 12, 13  |
+| 7     | 14      |
+| 8     | 15, 16  |
+| 9–10  | 17 (stretch) |
+| 11–13 | 18 (SwiftUI iOS app) |
 
 By the end you will have shipped a polished real‑world app that touches
-**every major Android subsystem** — perfect interview material.
+**every major Android subsystem**, plus a fully native SwiftUI iOS
+counterpart powered by your shared Kotlin codebase — perfect interview
+material for Android, iOS, and KMP-focused roles alike.
