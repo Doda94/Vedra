@@ -28,6 +28,48 @@ any Compose screen today. Everything below is the path from data → app.
 
 ---
 
+## Phase 0.5 — Data-layer hardening (from code review)
+
+Cheap now, expensive later. Do these before starting UI work.
+
+**Concepts:**
+- Program to interfaces, not implementations; why default constructor args hide dependencies.
+- Coroutine dispatchers: `Dispatchers.Default` for CPU-bound work (parsing), main-safety of repository APIs.
+- `Mutex` for suspend-friendly locking; simple in-memory caching.
+
+**Tasks:**
+1. Extract a `DhmzDataSource` interface (`suspend fun read(file: DhmzFile): String`);
+   make `LocalDhmzDataSource` implement it. `WeatherRepository` takes the interface,
+   **no default value** — pass it explicitly (DI comes in phase 3). This also
+   unblocks `RemoteDhmzDataSource` in phase 8.
+2. Make `WeatherRepository` main-safe: wrap read+parse in
+   `withContext(Dispatchers.Default)` — `7d_graf_i_simboli.xml` is ~324 cities ×
+   7 days of hourly slots; never parse it on the main thread.
+3. Add a thin in-memory cache in the repository: per-`DhmzFile` `Mutex` +
+   parsed-result + timestamp, so repeated calls don't re-read/re-parse.
+4. `XmlParser.readEntity`: bound the entity length (e.g. ≤ 10 chars, otherwise
+   treat the `&` as literal text) so a stray raw `&` can't swallow text until
+   the next `;` or EOF. Note: `toInt().toChar()` breaks for code points above
+   U+FFFF — leave a comment.
+5. `MeteoAlertParser`: only collect `<geocode>` entries whose
+   `valueName == "EMMA_ID"` into `regionCodes`.
+6. Cleanup:
+   - Remove `color: String` from `AlertSeverity` — severity→color mapping is a
+     UI concern (phase 7 maps it in Compose).
+   - Rename `DailyStationMeasurements.Unit` → `Kind` (shadows `kotlin.Unit`).
+   - Consider a `WindDirection` enum instead of the `String` typealias.
+   - Delete template leftovers `Greeting.kt` / unused `Platform` code.
+   - Decide on bundled-but-unparsed files (`temp_vode.xml`, `snijeg_n.xml`,
+     `agro*.xml`): add parsers or drop them from resources.
+   - Document that `HourlyForecast.time` is implicit **Europe/Zagreb** local
+     time — matters for "now" markers and DST handling later.
+
+**Done when:** `./gradlew check` still passes; no UI code change needed; repository is main-safe and cached; `WeatherRepository(LocalDhmzDataSource())` is constructed explicitly.
+
+**Interview talking points:** *"What makes a repository API main-safe?"*, *"`Dispatchers.Default` vs `Dispatchers.IO` — which for parsing and why?"*, *"Why is a default constructor argument a DI smell?"*
+
+---
+
 ## Phase 1 — Bootstrap a Compose UI screen
 
 **Concepts to master:**
@@ -49,6 +91,15 @@ any Compose screen today. Everything below is the path from data → app.
    `MaterialTheme.typography.displayMedium`.
 4. ⏳ Enable edge-to-edge with `enableEdgeToEdge()` and verify both light
    and dark system bars look correct.
+5. ⏳ **Go expressive (from code review):** you're on material3
+   `1.10.0-alpha05`, so switch `VedraTheme` to `MaterialExpressiveTheme`
+   with `motionScheme = MotionScheme.expressive()` — this unlocks the
+   expressive components the design uses (`LargeFlexibleTopAppBar`, button
+   groups, wavy progress, shape morphing).
+6. ⏳ **Default `dynamicColor = false`** so the brand palette (sky/cloud/sun
+   seeds) is what users actually see; expose dynamic color as a Settings
+   toggle later. Most devices run Android 12+, so `true` means nobody sees
+   your brand.
 
 **Done when:** App runs on an Android emulator with consistent theming, including dark mode toggle. (iOS gets its own SwiftUI implementation in phase 17 — for now you can leave the iOS app as the template stub.)
 
@@ -72,17 +123,30 @@ any Compose screen today. Everything below is the path from data → app.
    sealed interface UiState<out T> {
        data object Loading : UiState<Nothing>
        data class Success<T>(val data: T) : UiState<T>
-       data class Error(val throwable: Throwable) : UiState<Nothing>
+       data class Error(val error: DataError) : UiState<Nothing>
    }
    ```
-2. Create `composeApp/.../ui/home/HomeViewModel.kt` extending `ViewModel`, exposing `val state: StateFlow<HomeUiState>`. `HomeUiState` should hold:
+2. **Design the error model now, not in phase 8 (from code review):**
+   parsers currently `error()` on malformed input — fine for bundled
+   fixtures, a crash with real network data. Keep parsers throwing, but
+   have the repository catch and wrap into a sealed `DataError`:
+   ```kotlin
+   sealed interface DataError {
+       data class Parse(val file: DhmzFile, val cause: Throwable) : DataError
+       data class Network(val cause: Throwable) : DataError   // used from phase 8
+       data object NotFound : DataError                        // e.g. unknown city
+   }
+   ```
+   Doing this now means ViewModels won't need reworking when networking
+   lands in phase 8.
+3. Create `composeApp/.../ui/home/HomeViewModel.kt` extending `ViewModel`, exposing `val state: StateFlow<HomeUiState>`. `HomeUiState` should hold:
    - currently selected city,
    - `currentObservation: UiState<CurrentObservation>`,
    - `today: UiState<NationalDailyForecast>`,
    - `forecast: UiState<CityForecast>`,
    - `activeAlerts: List<MeteoAlertInfo>`.
-3. Load data in `init { viewModelScope.launch { ... } }`, using `MutableStateFlow.update { copy(...) }`.
-4. In `App.kt`, get the ViewModel with `viewModel { HomeViewModel(WeatherRepository()) }` and collect with `collectAsStateWithLifecycle()`.
+4. Load data in `init { viewModelScope.launch { ... } }`, using `MutableStateFlow.update { copy(...) }`.
+5. In `App.kt`, get the ViewModel with `viewModel { HomeViewModel(WeatherRepository(LocalDhmzDataSource())) }` and collect with `collectAsStateWithLifecycle()`.
 
 **Done when:** Home screen shows real "current temperature in Zagreb" loaded from XML.
 
@@ -100,7 +164,7 @@ any Compose screen today. Everything below is the path from data → app.
 
 **Tasks:**
 - Pick **Koin** (works in KMP). Add `io.insert-koin:koin-core` to `commonMain` and `koin-androidx-compose` to Android.
-- Create `shared/.../di/SharedModule.kt` with `single { LocalDhmzDataSource() }` and `single { WeatherRepository(get()) }`.
+- Create `shared/.../di/SharedModule.kt` with `single<DhmzDataSource> { LocalDhmzDataSource() }` and `single { WeatherRepository(get()) }` — binding the interface (phase 0.5) means phase 8 swaps to `RemoteDhmzDataSource` in one line.
 - Create `composeApp/.../di/AppModule.kt` with `viewModel { HomeViewModel(get()) }`.
 - Initialize Koin in `MainActivity.onCreate` (Android). For iOS, expose an `initKoin()` top-level function in `iosMain` that SwiftUI can call from `@main App.init` later (phase 17).
 - Replace any direct `WeatherRepository()` constructions with injected instances.
@@ -182,7 +246,10 @@ any Compose screen today. Everything below is the path from data → app.
 
 **Tasks:**
 1. `AlertsScreen` listing today/tomorrow/day‑after CAP alerts.
-2. Color the card by `AlertSeverity` (yellow/orange/red).
+2. Color the card by `AlertSeverity` (yellow/orange/red). The severity→color
+   mapping lives here in Compose (e.g. `AlertSeverity.containerColor()`), not
+   in the domain model — the hex string was removed from `AlertSeverity` in
+   phase 0.5.
 3. Filter by region — selecting a city shows only alerts whose `regionCodes` contain its EMMA region.
 4. Tapping opens a bottom sheet with full HR/EN description + instructions; toggle language.
 5. Add an `expect/actual` `currentInstant()` so you can show "starts in 2 h" relative times.
@@ -205,9 +272,18 @@ any Compose screen today. Everything below is the path from data → app.
 **Tasks:**
 1. Add Ktor: `ktor-client-core`, `ktor-client-content-negotiation`, `ktor-client-logging`, `ktor-client-okhttp` (Android), `ktor-client-darwin` (iOS).
 2. Create `expect class HttpClientFactory` (or use Ktor's expect/actual engines) — return a configured `HttpClient`.
-3. Create `RemoteDhmzDataSource(client: HttpClient)` mirroring `LocalDhmzDataSource.read(file)` but fetching from `https://vrijeme.hr/...`.
-4. Make `WeatherRepository` accept a `DhmzDataSource` interface; bind `Local` for tests, `Remote` in production.
-5. Add a thin caching layer: per‑file `Mutex` + `expirationMs` so the parsers run at most once per N minutes.
+3. Create `RemoteDhmzDataSource(client: HttpClient)` implementing the
+   `DhmzDataSource` interface from phase 0.5, fetching from `https://vrijeme.hr/...`.
+4. **Honor the declared XML encoding (from code review):** decode remote bytes
+   per the `<?xml encoding="..."?>` declaration — `hladnival.xml` and
+   `toplinskival_5.xml` declare ISO-8859-1(-2). Blind UTF-8 decoding corrupts
+   Croatian diacritics (č ć š ž đ) with real remote bytes. Sniff the declaration
+   from the first ~100 bytes, then decode accordingly.
+5. Bind `Local` for tests, `Remote` in production (one-line Koin change thanks
+   to phase 0.5).
+6. Extend the phase 0.5 in-memory cache with `expirationMs` so the parsers run
+   at most once per N minutes; map fetch failures into `DataError.Network`
+   (model already exists since phase 2).
 
 **Done when:** App online → fetches real DHMZ XMLs; offline → falls back to last cached. Add a "Last updated 12 min ago" footer.
 
