@@ -7,6 +7,11 @@ import kotlinx.datetime.LocalDateTime
 /**
  * One hourly forecast slot from `7d_graf_i_simboli.xml`.
  * Symbol may carry an `n` suffix for nighttime variants (e.g. "15n").
+ *
+ * [time] is implicit **Europe/Zagreb local time** as published by DHMZ —
+ * there is no timezone in the XML. Convert via
+ * `time.toInstant(TimeZone.of("Europe/Zagreb"))` before comparing with
+ * `Clock.System.now()` ("now" markers), and mind DST transition days.
  */
 data class HourlyForecast(
     val time: LocalDateTime,

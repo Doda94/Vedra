@@ -10,9 +10,9 @@ import vedra.shared.generated.resources.Res
  * decoding works for the data we currently bundle.
  */
 @OptIn(ExperimentalResourceApi::class)
-class LocalDhmzDataSource {
+class LocalDhmzDataSource : DhmzDataSource {
 
-    suspend fun read(file: DhmzFile): String {
+    override suspend fun read(file: DhmzFile): String {
         val bytes = Res.readBytes("files/dhmz/${file.fileName}")
         return decode(bytes)
     }
@@ -44,7 +44,8 @@ enum class DhmzFile(val fileName: String) {
     MARINE_FORECAST("jadran_h.xml"),
     MARINE_SAILORS("pomorci.xml"),
     SEA_TEMPERATURE("more_n.xml"),
-    SEA_WATER_TEMPERATURE("temp_vode.xml"),
+    WATER_TEMPERATURE("temp_vode.xml"),
+    SNOW_DEPTH("snijeg_n.xml"),
     UV_INDEX("uvi.xml"),
     BIO_FORECAST("bio_novo.xml"),
     FIRE_DANGER("indeks.xml"),

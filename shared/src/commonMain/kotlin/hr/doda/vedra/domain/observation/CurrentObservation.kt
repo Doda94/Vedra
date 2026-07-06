@@ -4,10 +4,27 @@ import hr.doda.vedra.domain.city.City
 import kotlinx.datetime.LocalDate
 
 /**
- * Wind direction abbreviation as published by DHMZ
- * (N, NE, E, SE, S, SW, W, NW; or "C" for calm; null if missing).
+ * Wind direction as published by DHMZ. `C` in the XML means calm.
+ * [fromToken] returns null for missing/unknown tokens.
  */
-typealias WindDirection = String
+enum class WindDirection(val abbreviation: String) {
+    NORTH("N"),
+    NORTHEAST("NE"),
+    EAST("E"),
+    SOUTHEAST("SE"),
+    SOUTH("S"),
+    SOUTHWEST("SW"),
+    WEST("W"),
+    NORTHWEST("NW"),
+    CALM("C");
+
+    companion object {
+        fun fromToken(token: String?): WindDirection? {
+            val t = token?.trim()?.uppercase() ?: return null
+            return entries.firstOrNull { it.abbreviation == t }
+        }
+    }
+}
 
 /** A current observation from a single weather station (hrvatska_n / hrvatska1_n). */
 data class CurrentObservation(
@@ -38,8 +55,9 @@ data class DailyStationMeasurement(
 data class DailyStationMeasurements(
     val date: LocalDate,
     val termHour: Int,
-    val unit: Unit,
+    val kind: Kind,
     val values: List<DailyStationMeasurement>,
 ) {
-    enum class Unit { TEMP_MIN_C, TEMP_MAX_C, TEMP_GROUND_C, PRECIPITATION_MM }
+    /** What is measured (named Kind, not Unit, to avoid shadowing kotlin.Unit). */
+    enum class Kind { TEMP_MIN_C, TEMP_MAX_C, TEMP_GROUND_C, PRECIPITATION_MM }
 }

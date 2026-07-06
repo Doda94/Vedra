@@ -34,6 +34,18 @@ class XmlParserTest {
     }
 
     @Test
+    fun strayAmpersandIsKeptLiteral() {
+        val node = parseXml("<r><a>Crikvenica &amp; okolica: sunčano & vedro do 25</a></r>")
+        assertEquals("Crikvenica & okolica: sunčano & vedro do 25", node.textOf("a"))
+    }
+
+    @Test
+    fun numericEntities() {
+        val node = parseXml("<r>&#268;akovec &#x10C;</r>")
+        assertEquals("Čakovec Č", node.text)
+    }
+
+    @Test
     fun selfClosingTags() {
         val node = parseXml("<r><x/><y v='2'/></r>")
         assertEquals(2, node.children.size)

@@ -1,5 +1,6 @@
 package hr.doda.vedra.domain.europe
 
+import hr.doda.vedra.domain.observation.WindDirection
 import kotlinx.datetime.LocalDate
 
 /** Current weather observation for a European city (`europa_n.xml`). */
@@ -9,7 +10,7 @@ data class EuropeanCityWeather(
     val humidityPct: Int?,
     val pressureHpa: Double?,
     val pressureTendencyHpa: Double?,
-    val windDirection: String?,
+    val windDirection: WindDirection?,
     val windSpeedMs: Double?,
     val weatherText: String?,
     val weatherSymbol: String?,

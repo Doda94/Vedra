@@ -110,13 +110,32 @@ internal object XmlParser {
         return attrs
     }
 
+    /** Longest entity we accept, e.g. `&#x10FFFF;` (8 chars between & and ;). */
+    private const val MAX_ENTITY_LENGTH = 10
+
+    /**
+     * Called with the cursor just past a `&`. If no `;` appears within
+     * [MAX_ENTITY_LENGTH] chars, this is a stray literal `&` in text (DHMZ
+     * narrative texts are not always well escaped) — rewind and return "&"
+     * instead of swallowing everything up to the next `;` or EOF.
+     *
+     * Note: numeric references use `toInt().toChar()`, which only covers the
+     * BMP — code points above U+FFFF would need surrogate-pair handling.
+     * Croatian text never needs them, so we keep it simple.
+     */
     private fun readEntity(p: Cursor): String {
+        val start = p.pos
         val sb = StringBuilder()
-        while (true) {
-            val c = p.peek() ?: error("Unterminated entity")
+        var terminated = false
+        while (sb.length <= MAX_ENTITY_LENGTH) {
+            val c = p.peek() ?: break
             p.advance()
-            if (c == ';') break
+            if (c == ';') { terminated = true; break }
             sb.append(c)
+        }
+        if (!terminated) {
+            p.jumpTo(start)
+            return "&"
         }
         val raw = sb.toString()
         return when {
@@ -126,8 +145,9 @@ internal object XmlParser {
             raw == "quot" -> "\""
             raw == "apos" -> "'"
             raw.startsWith("#x") || raw.startsWith("#X") ->
-                raw.substring(2).toInt(16).toChar().toString()
-            raw.startsWith("#") -> raw.substring(1).toInt().toChar().toString()
+                raw.substring(2).toIntOrNull(16)?.toChar()?.toString() ?: "&$raw;"
+            raw.startsWith("#") ->
+                raw.substring(1).toIntOrNull()?.toChar()?.toString() ?: "&$raw;"
             else -> "&$raw;" // unknown entity — keep literal
         }
     }

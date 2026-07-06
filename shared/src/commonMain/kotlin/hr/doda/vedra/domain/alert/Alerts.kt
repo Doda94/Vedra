@@ -2,13 +2,17 @@ package hr.doda.vedra.domain.alert
 
 import kotlinx.datetime.Instant
 
-/** Severity level as defined by the EUMETNET / Meteoalarm scale. */
-enum class AlertSeverity(val level: Int, val color: String) {
-    GREEN(1, "#00FF00"),
-    YELLOW(2, "#FFFF00"),
-    ORANGE(3, "#FFA500"),
-    RED(4, "#FF0000"),
-    UNKNOWN(0, "#888888");
+/**
+ * Severity level as defined by the EUMETNET / Meteoalarm scale.
+ * Severity→color mapping is a UI concern — see the Compose theme (phase 7),
+ * which must pair color with icon + label for color-blind accessibility.
+ */
+enum class AlertSeverity(val level: Int) {
+    GREEN(1),
+    YELLOW(2),
+    ORANGE(3),
+    RED(4),
+    UNKNOWN(0);
 
     companion object {
         fun fromAwarenessLevel(text: String?): AlertSeverity {

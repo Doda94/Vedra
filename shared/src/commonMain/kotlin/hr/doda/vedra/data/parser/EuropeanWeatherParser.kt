@@ -7,6 +7,7 @@ import hr.doda.vedra.data.parser.ParsingUtils.parseInt
 import hr.doda.vedra.data.xml.parseXml
 import hr.doda.vedra.domain.europe.EuropeanCityWeather
 import hr.doda.vedra.domain.europe.EuropeanWeatherSnapshot
+import hr.doda.vedra.domain.observation.WindDirection
 
 /** Parses `europa_n.xml` (current weather across European cities). */
 object EuropeanWeatherParser {
@@ -26,7 +27,7 @@ object EuropeanWeatherParser {
                 humidityPct = parseInt(data?.textOf("Vlaga")),
                 pressureHpa = parseDouble(data?.textOf("Tlak")),
                 pressureTendencyHpa = parseDouble(data?.textOf("TlakTend")),
-                windDirection = cleanText(data?.textOf("VjetarSmjer")),
+                windDirection = WindDirection.fromToken(data?.textOf("VjetarSmjer")),
                 windSpeedMs = parseDouble(data?.textOf("VjetarBrzina")),
                 weatherText = cleanText(data?.textOf("Vrijeme")),
                 weatherSymbol = cleanText(data?.textOf("VrijemeZnak")),

@@ -50,7 +50,9 @@ object MeteoAlertParser {
             instruction = cleanText(info.textOf("instruction")).orEmpty(),
             areas = areas.mapNotNull { cleanText(it.textOf("areaDesc")) },
             regionCodes = areas.flatMap { area ->
-                area.children("geocode").mapNotNull { it.textOf("value") }
+                area.children("geocode")
+                    .filter { it.textOf("valueName")?.trim().equals("EMMA_ID", ignoreCase = true) }
+                    .mapNotNull { cleanText(it.textOf("value")) }
             },
         )
     }

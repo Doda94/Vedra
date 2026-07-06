@@ -23,14 +23,30 @@ Treat each phase as a self‑contained study session (1–4 hours).
 - ⏳ Wire `VedraTheme` into `MainActivity.setContent { ... }` and render a
   first "Hello Vedra" `Scaffold + TopAppBar` body.
 
-You can call `WeatherRepository().sevenDayForecastFor("ZAGREB-GRIČ")` from
-any Compose screen today. Everything below is the path from data → app.
+You can call `WeatherRepository(LocalDhmzDataSource()).sevenDayForecastFor("ZAGREB-GRIČ")`
+from any Compose screen today. Everything below is the path from data → app.
 
 ---
 
-## Phase 0.5 — Data-layer hardening (from code review)
+## ✅ Phase 0.5 — Data-layer hardening (from code review) — DONE
 
-Cheap now, expensive later. Do these before starting UI work.
+Completed 2026-07-07. What shipped, beyond the tasks below:
+- `DhmzDataSource` interface extracted; `WeatherRepository(source)` is
+  explicit, **main-safe** (`Dispatchers.Default`) and **cached** (per-file
+  `Mutex` + timestamp; `invalidate()` clears it — wire to pull-to-refresh).
+- `sevenDayForecastFor(...)` now filters the cached full parse instead of
+  re-parsing the XML.
+- New parsers + repository functions: `waterTemperatures()`
+  (`temp_vode.xml`, KiTS river-water timeseries; stations are numeric codes)
+  and `snowDepths()` (`snijeg_n.xml`; summer fixture is title-only, so the
+  per-station tags are a best guess — **re-verify with a winter file**).
+  `DhmzFile.SEA_WATER_TEMPERATURE` renamed to `WATER_TEMPERATURE`, `SNOW_DEPTH` added.
+- Removed: `agro7.xml`, `agro_bilten.xml`, `agro_temp.xml` (no parsers,
+  recoverable from git), `Greeting.kt` + `Platform.*` template leftovers
+  (iOS `ContentView.swift` updated to a plain stub).
+- `WindDirection` is now an enum (8 directions + `CALM`); used by both
+  `CurrentObservation` and `EuropeanCityWeather`.
+- New tests: water temp + snow fixtures, stray-`&` regression, numeric entities.
 
 **Concepts:**
 - Program to interfaces, not implementations; why default constructor args hide dependencies.

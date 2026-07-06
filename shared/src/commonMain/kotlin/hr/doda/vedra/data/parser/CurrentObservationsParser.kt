@@ -9,6 +9,7 @@ import hr.doda.vedra.domain.city.City
 import hr.doda.vedra.domain.city.Coordinates
 import hr.doda.vedra.domain.observation.CurrentObservation
 import hr.doda.vedra.domain.observation.CurrentObservationSnapshot
+import hr.doda.vedra.domain.observation.WindDirection
 
 /** Parses `hrvatska_n.xml` / `hrvatska1_n.xml` (current observations). */
 object CurrentObservationsParser {
@@ -36,7 +37,7 @@ object CurrentObservationsParser {
                 humidityPct = parseInt(data?.textOf("Vlaga")),
                 pressureHpa = parseDouble(data?.textOf("Tlak")),
                 pressureTendencyHpa = parseDouble(data?.textOf("TlakTend")),
-                windDirection = cleanText(data?.textOf("VjetarSmjer")),
+                windDirection = WindDirection.fromToken(data?.textOf("VjetarSmjer")),
                 windSpeedMs = parseDouble(data?.textOf("VjetarBrzina")),
                 weatherText = cleanText(data?.textOf("Vrijeme")),
                 weatherSymbol = cleanText(data?.textOf("VrijemeZnak")),

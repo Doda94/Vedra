@@ -139,6 +139,26 @@ class ParsersFixtureTest {
     }
 
     @Test
+    fun parsesWaterTemperatures() {
+        val snapshot = WaterTemperatureParser.parse(read("temp_vode.xml"))
+        assertTrue(snapshot.series.isNotEmpty())
+        val first = snapshot.series.first()
+        assertTrue(first.stationCode.isNotEmpty())
+        assertTrue(first.readings.isNotEmpty())
+        assertNotNull(first.latest)
+    }
+
+    @Test
+    fun parsesSnowDepths() {
+        val snow = SnowDepthParser.parse(read("snijeg_n.xml"))
+        assertTrue(snow.title.isNotEmpty())
+        assertNotNull(snow.date)
+        assertNotNull(snow.hour)
+        // Summer fixture carries only the title — station list is empty.
+        assertTrue(snow.stations.isEmpty())
+    }
+
+    @Test
     fun parsesYesterdayMeasurements() {
         val tn = DailyMeasurementParser.parseMinTemperature(read("tn.xml"))
         val tx = DailyMeasurementParser.parseMaxTemperature(read("tx.xml"))

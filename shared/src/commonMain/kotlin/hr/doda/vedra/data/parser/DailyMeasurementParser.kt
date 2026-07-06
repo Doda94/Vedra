@@ -16,18 +16,18 @@ import hr.doda.vedra.domain.observation.DailyStationMeasurements
 object DailyMeasurementParser {
 
     fun parseMinTemperature(xml: String): DailyStationMeasurements =
-        parse(xml, valueTag = "tempmin", unit = DailyStationMeasurements.Unit.TEMP_MIN_C)
+        parse(xml, valueTag = "tempmin", kind = DailyStationMeasurements.Kind.TEMP_MIN_C)
 
     fun parseMaxTemperature(xml: String): DailyStationMeasurements =
-        parse(xml, valueTag = "tempmax", unit = DailyStationMeasurements.Unit.TEMP_MAX_C)
+        parse(xml, valueTag = "tempmax", kind = DailyStationMeasurements.Kind.TEMP_MAX_C)
 
     fun parseGroundTemperature(xml: String): DailyStationMeasurements =
-        parse(xml, valueTag = "temp5", unit = DailyStationMeasurements.Unit.TEMP_GROUND_C)
+        parse(xml, valueTag = "temp5", kind = DailyStationMeasurements.Kind.TEMP_GROUND_C)
 
     fun parsePrecipitation(xml: String): DailyStationMeasurements =
-        parse(xml, valueTag = "kolicina", unit = DailyStationMeasurements.Unit.PRECIPITATION_MM)
+        parse(xml, valueTag = "kolicina", kind = DailyStationMeasurements.Kind.PRECIPITATION_MM)
 
-    private fun parse(xml: String, valueTag: String, unit: DailyStationMeasurements.Unit): DailyStationMeasurements {
+    private fun parse(xml: String, valueTag: String, kind: DailyStationMeasurements.Kind): DailyStationMeasurements {
         val root = parseXml(xml)
         val header = root.child("datumtermin")
         val date = parseDmyDate(header?.textOf("datum"))
@@ -42,7 +42,7 @@ object DailyMeasurementParser {
         return DailyStationMeasurements(
             date = date,
             termHour = term,
-            unit = unit,
+            kind = kind,
             values = values,
         )
     }
