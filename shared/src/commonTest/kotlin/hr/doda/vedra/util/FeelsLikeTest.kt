@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class FeelsLikeTest {
-
     @Test
     fun apparentTemperatureIsLowerWithWind() {
         val calm = FeelsLike.apparentTemperature(20.0, 60, 0.0)

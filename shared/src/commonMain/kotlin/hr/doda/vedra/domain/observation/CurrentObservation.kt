@@ -7,7 +7,9 @@ import kotlinx.datetime.LocalDate
  * Wind direction as published by DHMZ. `C` in the XML means calm.
  * [fromToken] returns null for missing/unknown tokens.
  */
-enum class WindDirection(val abbreviation: String) {
+enum class WindDirection(
+    val abbreviation: String,
+) {
     NORTH("N"),
     NORTHEAST("NE"),
     EAST("E"),
@@ -16,7 +18,8 @@ enum class WindDirection(val abbreviation: String) {
     SOUTHWEST("SW"),
     WEST("W"),
     NORTHWEST("NW"),
-    CALM("C");
+    CALM("C"),
+    ;
 
     companion object {
         fun fromToken(token: String?): WindDirection? {

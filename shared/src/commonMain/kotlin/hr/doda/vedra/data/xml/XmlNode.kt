@@ -12,7 +12,10 @@ data class XmlNode(
     val text: String = "",
 ) {
     fun child(name: String): XmlNode? = children.firstOrNull { it.name == name }
+
     fun children(name: String): List<XmlNode> = children.filter { it.name == name }
+
     fun attr(name: String): String? = attributes[name]
+
     fun textOf(name: String): String? = child(name)?.text
 }

@@ -11,7 +11,6 @@ import vedra.shared.generated.resources.Res
  */
 @OptIn(ExperimentalResourceApi::class)
 class LocalDhmzDataSource : DhmzDataSource {
-
     override suspend fun read(file: DhmzFile): String {
         val bytes = Res.readBytes("files/dhmz/${file.fileName}")
         return decode(bytes)
@@ -19,17 +18,24 @@ class LocalDhmzDataSource : DhmzDataSource {
 
     private fun decode(bytes: ByteArray): String {
         // Strip a UTF-8 BOM if present.
-        val start = if (bytes.size >= 3 &&
-            bytes[0] == 0xEF.toByte() &&
-            bytes[1] == 0xBB.toByte() &&
-            bytes[2] == 0xBF.toByte()
-        ) 3 else 0
+        val start =
+            if (bytes.size >= 3 &&
+                bytes[0] == 0xEF.toByte() &&
+                bytes[1] == 0xBB.toByte() &&
+                bytes[2] == 0xBF.toByte()
+            ) {
+                3
+            } else {
+                0
+            }
         return bytes.decodeToString(start, bytes.size)
     }
 }
 
 /** Catalogue of bundled DHMZ XML files. */
-enum class DhmzFile(val fileName: String) {
+enum class DhmzFile(
+    val fileName: String,
+) {
     CURRENT_OBSERVATIONS("hrvatska_n.xml"),
     CURRENT_OBSERVATIONS_ALT("hrvatska1_n.xml"),
     SEVEN_DAY_FORECAST("7d_graf_i_simboli.xml"),

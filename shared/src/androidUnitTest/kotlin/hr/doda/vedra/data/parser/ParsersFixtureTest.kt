@@ -15,12 +15,12 @@ import kotlin.test.assertTrue
  * the fixtures straight from `composeResources/files/dhmz/`.
  */
 class ParsersFixtureTest {
-
-    private val fixturesDir = File("src/commonMain/composeResources/files/dhmz").also {
-        check(it.exists()) {
-            "fixtures dir not found at ${it.absolutePath}; run gradle from project root"
+    private val fixturesDir =
+        File("src/commonMain/composeResources/files/dhmz").also {
+            check(it.exists()) {
+                "fixtures dir not found at ${it.absolutePath}; run gradle from project root"
+            }
         }
-    }
 
     private fun read(name: String): String = File(fixturesDir, name).readText()
 

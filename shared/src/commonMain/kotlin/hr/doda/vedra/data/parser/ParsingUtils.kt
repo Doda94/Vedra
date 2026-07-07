@@ -5,7 +5,6 @@ import kotlinx.datetime.LocalDateTime
 
 /** Helpers shared across DHMZ XML parsers. */
 internal object ParsingUtils {
-
     /**
      * DHMZ frequently uses `-`, `/`, empty strings or whitespace to
      * indicate a missing measurement. Returns null in those cases.
@@ -18,6 +17,7 @@ internal object ParsingUtils {
     }
 
     fun parseDouble(raw: String?): Double? = cleanText(raw)?.replace(',', '.')?.toDoubleOrNull()
+
     fun parseInt(raw: String?): Int? = cleanText(raw)?.toIntOrNull()
 
     /** Parses dd.MM.yyyy (with or without trailing dot). */
@@ -39,6 +39,8 @@ internal object ParsingUtils {
     }
 
     /** Parses dd.MM.yyyy hh:mm style timestamps where the time is appended. */
-    fun parseDateAtHour(date: LocalDate, hour: Int): LocalDateTime =
-        LocalDateTime(date.year, date.monthNumber, date.dayOfMonth, hour.coerceIn(0, 23), 0)
+    fun parseDateAtHour(
+        date: LocalDate,
+        hour: Int,
+    ): LocalDateTime = LocalDateTime(date.year, date.monthNumber, date.dayOfMonth, hour.coerceIn(0, 23), 0)
 }

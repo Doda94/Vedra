@@ -5,7 +5,6 @@ import kotlin.math.pow
 
 /** Apparent / "feels like" temperature utilities. */
 object FeelsLike {
-
     /**
      * Returns "apparent" temperature in °C using the Australian Bureau of
      * Meteorology formula (works at all temperature ranges, blends the
@@ -28,24 +27,31 @@ object FeelsLike {
     }
 
     /** US NWS heat index in °C — only meaningful at warm temperatures (>= 27 °C). */
-    fun heatIndex(temperatureC: Double, humidityPct: Int): Double {
+    fun heatIndex(
+        temperatureC: Double,
+        humidityPct: Int,
+    ): Double {
         if (temperatureC < 27.0) return temperatureC
         val tF = temperatureC * 9.0 / 5.0 + 32.0
         val rh = humidityPct.toDouble().coerceIn(0.0, 100.0)
-        val hiF = -42.379 +
-            2.04901523 * tF +
-            10.14333127 * rh -
-            0.22475541 * tF * rh -
-            0.00683783 * tF.pow(2) -
-            0.05481717 * rh.pow(2) +
-            0.00122874 * tF.pow(2) * rh +
-            0.00085282 * tF * rh.pow(2) -
-            0.00000199 * tF.pow(2) * rh.pow(2)
+        val hiF =
+            -42.379 +
+                2.04901523 * tF +
+                10.14333127 * rh -
+                0.22475541 * tF * rh -
+                0.00683783 * tF.pow(2) -
+                0.05481717 * rh.pow(2) +
+                0.00122874 * tF.pow(2) * rh +
+                0.00085282 * tF * rh.pow(2) -
+                0.00000199 * tF.pow(2) * rh.pow(2)
         return (hiF - 32.0) * 5.0 / 9.0
     }
 
     /** Wind-chill in °C — only meaningful below 10 °C and above 1.34 m/s. */
-    fun windChill(temperatureC: Double, windSpeedMs: Double): Double {
+    fun windChill(
+        temperatureC: Double,
+        windSpeedMs: Double,
+    ): Double {
         if (temperatureC > 10.0 || windSpeedMs <= 1.34) return temperatureC
         val v = windSpeedMs * 3.6 // km/h
         return 13.12 + 0.6215 * temperatureC - 11.37 * v.pow(0.16) +

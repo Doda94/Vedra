@@ -14,7 +14,6 @@ package hr.doda.vedra.data.xml
  * Not validating, not streaming — fine for the small DHMZ XMLs we ship.
  */
 internal object XmlParser {
-
     fun parse(input: String): XmlNode {
         val p = Cursor(input)
         // Skip leading BOM and whitespace.
@@ -101,7 +100,10 @@ internal object XmlParser {
             val sb = StringBuilder()
             while (true) {
                 val ch = p.peek() ?: error("Unterminated attribute $name")
-                if (ch == quote) { p.advance(); break }
+                if (ch == quote) {
+                    p.advance()
+                    break
+                }
                 p.advance()
                 if (ch == '&') sb.append(readEntity(p)) else sb.append(ch)
             }
@@ -130,7 +132,10 @@ internal object XmlParser {
         while (sb.length <= MAX_ENTITY_LENGTH) {
             val c = p.peek() ?: break
             p.advance()
-            if (c == ';') { terminated = true; break }
+            if (c == ';') {
+                terminated = true
+                break
+            }
             sb.append(c)
         }
         if (!terminated) {
@@ -145,9 +150,17 @@ internal object XmlParser {
             raw == "quot" -> "\""
             raw == "apos" -> "'"
             raw.startsWith("#x") || raw.startsWith("#X") ->
-                raw.substring(2).toIntOrNull(16)?.toChar()?.toString() ?: "&$raw;"
+                raw
+                    .substring(2)
+                    .toIntOrNull(16)
+                    ?.toChar()
+                    ?.toString() ?: "&$raw;"
             raw.startsWith("#") ->
-                raw.substring(1).toIntOrNull()?.toChar()?.toString() ?: "&$raw;"
+                raw
+                    .substring(1)
+                    .toIntOrNull()
+                    ?.toChar()
+                    ?.toString() ?: "&$raw;"
             else -> "&$raw;" // unknown entity — keep literal
         }
     }
@@ -191,20 +204,50 @@ internal object XmlParser {
         return if (i >= 0) substring(i + 1) else this
     }
 
-    private class Cursor(private val src: String) {
+    private class Cursor(
+        private val src: String,
+    ) {
         var pos: Int = 0
+
         fun eof(): Boolean = pos >= src.length
+
         fun peek(): Char? = src.getOrNull(pos)
+
         fun advance(): Char = src[pos++]
-        fun advance(n: Int) { pos += n }
-        fun jumpTo(p: Int) { pos = p }
+
+        fun advance(n: Int) {
+            pos += n
+        }
+
+        fun jumpTo(p: Int) {
+            pos = p
+        }
+
         fun match(c: Char): Boolean =
-            if (peek() == c) { pos++; true } else false
+            if (peek() == c) {
+                pos++
+                true
+            } else {
+                false
+            }
+
         fun match(s: String): Boolean =
-            if (startsWith(s)) { pos += s.length; true } else false
+            if (startsWith(s)) {
+                pos += s.length
+                true
+            } else {
+                false
+            }
+
         fun startsWith(s: String): Boolean = src.regionMatches(pos, s, 0, s.length)
+
         fun indexOf(s: String): Int = src.indexOf(s, pos)
-        fun slice(from: Int, to: Int): String = src.substring(from, to)
+
+        fun slice(
+            from: Int,
+            to: Int,
+        ): String = src.substring(from, to)
+
         fun skipWhitespace() {
             while (!eof() && src[pos].isWhitespace()) pos++
         }

@@ -7,12 +7,15 @@ import kotlinx.datetime.Instant
  * Severity→color mapping is a UI concern — see the Compose theme (phase 7),
  * which must pair color with icon + label for color-blind accessibility.
  */
-enum class AlertSeverity(val level: Int) {
+enum class AlertSeverity(
+    val level: Int,
+) {
     GREEN(1),
     YELLOW(2),
     ORANGE(3),
     RED(4),
-    UNKNOWN(0);
+    UNKNOWN(0),
+    ;
 
     companion object {
         fun fromAwarenessLevel(text: String?): AlertSeverity {
@@ -22,18 +25,22 @@ enum class AlertSeverity(val level: Int) {
             return entries.firstOrNull { it.level == n } ?: UNKNOWN
         }
 
-        fun fromName(name: String?): AlertSeverity = when (name?.lowercase()) {
-            "minor", "green" -> GREEN
-            "moderate", "yellow" -> YELLOW
-            "severe", "orange" -> ORANGE
-            "extreme", "red" -> RED
-            else -> UNKNOWN
-        }
+        fun fromName(name: String?): AlertSeverity =
+            when (name?.lowercase()) {
+                "minor", "green" -> GREEN
+                "moderate", "yellow" -> YELLOW
+                "severe", "orange" -> ORANGE
+                "extreme", "red" -> RED
+                else -> UNKNOWN
+            }
     }
 }
 
 /** Type of weather hazard. */
-enum class AlertType(val code: Int, val displayName: String) {
+enum class AlertType(
+    val code: Int,
+    val displayName: String,
+) {
     WIND(1, "Vjetar"),
     SNOW_ICE(2, "Snijeg / led"),
     THUNDERSTORM(3, "Grmljavinska oluja"),
@@ -46,7 +53,8 @@ enum class AlertType(val code: Int, val displayName: String) {
     RAIN(10, "Kiša"),
     FLOOD(12, "Poplava"),
     RAIN_FLOOD(11, "Kiša / poplava"),
-    UNKNOWN(0, "Nepoznato");
+    UNKNOWN(0, "Nepoznato"),
+    ;
 
     companion object {
         fun fromAwarenessType(text: String?): AlertType {
@@ -81,8 +89,7 @@ data class MeteoAlert(
     val msgType: String,
     val infos: List<MeteoAlertInfo>,
 ) {
-    fun localized(language: String): MeteoAlertInfo? =
-        infos.firstOrNull { it.language.equals(language, ignoreCase = true) }
+    fun localized(language: String): MeteoAlertInfo? = infos.firstOrNull { it.language.equals(language, ignoreCase = true) }
 }
 
 /** All alerts for a given target day. */

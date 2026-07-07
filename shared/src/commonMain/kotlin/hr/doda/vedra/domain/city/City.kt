@@ -1,7 +1,10 @@
 package hr.doda.vedra.domain.city
 
 /** Geographic coordinates. */
-data class Coordinates(val latitude: Double, val longitude: Double)
+data class Coordinates(
+    val latitude: Double,
+    val longitude: Double,
+)
 
 /** A weather station / city as identified by DHMZ. */
 data class City(
@@ -16,7 +19,10 @@ data class City(
  * Croatian forecast macro-regions used by DHMZ in `prognoza_*` and
  * `regije_danas` files.
  */
-enum class Region(val key: String, val displayName: String) {
+enum class Region(
+    val key: String,
+    val displayName: String,
+) {
     CENTRAL("sredisnja", "Središnja Hrvatska"),
     EASTERN("istocna", "Istočna Hrvatska"),
     MOUNTAINOUS("gorska", "Gorska Hrvatska"),
@@ -25,10 +31,10 @@ enum class Region(val key: String, val displayName: String) {
     CENTRAL_ADRIATIC("srednji Jadran", "Srednji Jadran"),
     SOUTHERN_ADRIATIC("juzni Jadran", "Južni Jadran"),
     ISTRIA("istra", "Istra"),
-    DALMATIA("dalmacija", "Dalmacija");
+    DALMATIA("dalmacija", "Dalmacija"),
+    ;
 
     companion object {
-        fun fromKey(key: String): Region? =
-            entries.firstOrNull { it.key.equals(key, ignoreCase = true) }
+        fun fromKey(key: String): Region? = entries.firstOrNull { it.key.equals(key, ignoreCase = true) }
     }
 }

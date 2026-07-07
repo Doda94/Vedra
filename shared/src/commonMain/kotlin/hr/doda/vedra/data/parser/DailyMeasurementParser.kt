@@ -14,7 +14,6 @@ import hr.doda.vedra.domain.observation.DailyStationMeasurements
  * a flat list of `<grad>` entries.
  */
 object DailyMeasurementParser {
-
     fun parseMinTemperature(xml: String): DailyStationMeasurements =
         parse(xml, valueTag = "tempmin", kind = DailyStationMeasurements.Kind.TEMP_MIN_C)
 
@@ -27,18 +26,24 @@ object DailyMeasurementParser {
     fun parsePrecipitation(xml: String): DailyStationMeasurements =
         parse(xml, valueTag = "kolicina", kind = DailyStationMeasurements.Kind.PRECIPITATION_MM)
 
-    private fun parse(xml: String, valueTag: String, kind: DailyStationMeasurements.Kind): DailyStationMeasurements {
+    private fun parse(
+        xml: String,
+        valueTag: String,
+        kind: DailyStationMeasurements.Kind,
+    ): DailyStationMeasurements {
         val root = parseXml(xml)
         val header = root.child("datumtermin")
-        val date = parseDmyDate(header?.textOf("datum"))
-            ?: error("Missing date in measurement XML")
+        val date =
+            parseDmyDate(header?.textOf("datum"))
+                ?: error("Missing date in measurement XML")
         val term = parseInt(header?.textOf("termin")) ?: 0
-        val values = root.children("grad").map { grad ->
-            DailyStationMeasurement(
-                cityName = cleanText(grad.textOf("ime")).orEmpty(),
-                value = parseDouble(grad.textOf(valueTag)),
-            )
-        }
+        val values =
+            root.children("grad").map { grad ->
+                DailyStationMeasurement(
+                    cityName = cleanText(grad.textOf("ime")).orEmpty(),
+                    value = parseDouble(grad.textOf(valueTag)),
+                )
+            }
         return DailyStationMeasurements(
             date = date,
             termHour = term,

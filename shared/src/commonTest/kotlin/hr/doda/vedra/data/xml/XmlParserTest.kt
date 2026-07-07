@@ -6,7 +6,6 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class XmlParserTest {
-
     @Test
     fun parsesSimpleElement() {
         val node = parseXml("<a x='1'><b>hi</b></a>")
@@ -17,18 +16,20 @@ class XmlParserTest {
 
     @Test
     fun stripsNamespacePrefix() {
-        val node = parseXml(
-            "<alert xmlns=\"urn:oasis:names:tc:emergency:cap:1.2\"><id>X</id></alert>"
-        )
+        val node =
+            parseXml(
+                "<alert xmlns=\"urn:oasis:names:tc:emergency:cap:1.2\"><id>X</id></alert>",
+            )
         assertEquals("alert", node.name)
         assertEquals("X", node.textOf("id"))
     }
 
     @Test
     fun handlesEntitiesAndCdata() {
-        val node = parseXml(
-            "<r><a>5 &gt; 3 &amp; ok</a><b><![CDATA[<x>raw</x>]]></b></r>"
-        )
+        val node =
+            parseXml(
+                "<r><a>5 &gt; 3 &amp; ok</a><b><![CDATA[<x>raw</x>]]></b></r>",
+            )
         assertEquals("5 > 3 & ok", node.textOf("a"))
         assertEquals("<x>raw</x>", node.textOf("b"))
     }
@@ -55,9 +56,10 @@ class XmlParserTest {
 
     @Test
     fun ignoresProcessingInstructionAndComment() {
-        val node = parseXml(
-            "<?xml version='1.0'?><!-- hi --><r>ok</r>"
-        )
+        val node =
+            parseXml(
+                "<?xml version='1.0'?><!-- hi --><r>ok</r>",
+            )
         assertEquals("r", node.name)
         assertTrue(node.text == "ok")
     }

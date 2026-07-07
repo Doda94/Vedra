@@ -57,8 +57,10 @@ import kotlinx.datetime.Clock
 class WeatherRepository(
     private val source: DhmzDataSource,
 ) {
-
-    private class CacheEntry(val value: Any, val parsedAtMs: Long)
+    private class CacheEntry(
+        val value: Any,
+        val parsedAtMs: Long,
+    )
 
     private val mapLock = Mutex()
     private val fileLocks = mutableMapOf<DhmzFile, Mutex>()
@@ -69,7 +71,10 @@ class WeatherRepository(
         mapLock.withLock { cache.clear() }
     }
 
-    private suspend fun <T : Any> cached(file: DhmzFile, parse: (String) -> T): T {
+    private suspend fun <T : Any> cached(
+        file: DhmzFile,
+        parse: (String) -> T,
+    ): T {
         val fileLock = mapLock.withLock { fileLocks.getOrPut(file) { Mutex() } }
         return fileLock.withLock {
             val hit = mapLock.withLock { cache[file] }
@@ -77,9 +82,10 @@ class WeatherRepository(
                 @Suppress("UNCHECKED_CAST")
                 hit.value as T
             } else {
-                val parsed = withContext(Dispatchers.Default) {
-                    parse(source.read(file))
-                }
+                val parsed =
+                    withContext(Dispatchers.Default) {
+                        parse(source.read(file))
+                    }
                 mapLock.withLock {
                     cache[file] = CacheEntry(parsed, Clock.System.now().toEpochMilliseconds())
                 }
@@ -91,8 +97,7 @@ class WeatherRepository(
     suspend fun currentObservations(): CurrentObservationSnapshot =
         cached(DhmzFile.CURRENT_OBSERVATIONS) { CurrentObservationsParser.parse(it) }
 
-    suspend fun sevenDayForecast(): List<CityForecast> =
-        cached(DhmzFile.SEVEN_DAY_FORECAST) { SevenDayForecastParser.parse(it) }
+    suspend fun sevenDayForecast(): List<CityForecast> = cached(DhmzFile.SEVEN_DAY_FORECAST) { SevenDayForecastParser.parse(it) }
 
     suspend fun sevenDayForecastFor(cityNameOrCode: String): CityForecast? =
         sevenDayForecast().firstOrNull {
@@ -100,62 +105,48 @@ class WeatherRepository(
                 it.cityCode.equals(cityNameOrCode, ignoreCase = true)
         }
 
-    suspend fun forecastToday(): NationalDailyForecast =
-        cached(DhmzFile.FORECAST_TODAY) { NationalDailyForecastParser.parse(it) }
+    suspend fun forecastToday(): NationalDailyForecast = cached(DhmzFile.FORECAST_TODAY) { NationalDailyForecastParser.parse(it) }
 
-    suspend fun forecastTomorrow(): NationalDailyForecast =
-        cached(DhmzFile.FORECAST_TOMORROW) { NationalDailyForecastParser.parse(it) }
+    suspend fun forecastTomorrow(): NationalDailyForecast = cached(DhmzFile.FORECAST_TOMORROW) { NationalDailyForecastParser.parse(it) }
 
-    suspend fun outlookForecast(): OutlookForecast =
-        cached(DhmzFile.FORECAST_OUTLOOK) { OutlookForecastParser.parse(it) }
+    suspend fun outlookForecast(): OutlookForecast = cached(DhmzFile.FORECAST_OUTLOOK) { OutlookForecastParser.parse(it) }
 
     suspend fun regionalDescriptions(): RegionalDescriptions =
         cached(DhmzFile.REGIONAL_DESCRIPTIONS) { RegionalDescriptionsParser.parse(it) }
 
     suspend fun alerts(target: MeteoAlertSet.Target = MeteoAlertSet.Target.TODAY): MeteoAlertSet {
-        val file = when (target) {
-            MeteoAlertSet.Target.TODAY -> DhmzFile.ALERTS_TODAY
-            MeteoAlertSet.Target.TOMORROW -> DhmzFile.ALERTS_TOMORROW
-            MeteoAlertSet.Target.DAY_AFTER_TOMORROW -> DhmzFile.ALERTS_DAY_AFTER
-        }
+        val file =
+            when (target) {
+                MeteoAlertSet.Target.TODAY -> DhmzFile.ALERTS_TODAY
+                MeteoAlertSet.Target.TOMORROW -> DhmzFile.ALERTS_TOMORROW
+                MeteoAlertSet.Target.DAY_AFTER_TOMORROW -> DhmzFile.ALERTS_DAY_AFTER
+            }
         return cached(file) { MeteoAlertParser.parse(it, target) }
     }
 
-    suspend fun hydroBulletin(): HydroBulletin =
-        cached(DhmzFile.HYDRO_BULLETIN) { HydroBulletinParser.parse(it) }
+    suspend fun hydroBulletin(): HydroBulletin = cached(DhmzFile.HYDRO_BULLETIN) { HydroBulletinParser.parse(it) }
 
-    suspend fun marineForecast(): MarineForecast =
-        cached(DhmzFile.MARINE_FORECAST) { MarineForecastParser.parse(it) }
+    suspend fun marineForecast(): MarineForecast = cached(DhmzFile.MARINE_FORECAST) { MarineForecastParser.parse(it) }
 
-    suspend fun sailorsMarineForecast(): SailorsMarineForecast =
-        cached(DhmzFile.MARINE_SAILORS) { SailorsMarineForecastParser.parse(it) }
+    suspend fun sailorsMarineForecast(): SailorsMarineForecast = cached(DhmzFile.MARINE_SAILORS) { SailorsMarineForecastParser.parse(it) }
 
-    suspend fun seaTemperature(): SeaTemperatureSnapshot =
-        cached(DhmzFile.SEA_TEMPERATURE) { SeaTemperatureParser.parse(it) }
+    suspend fun seaTemperature(): SeaTemperatureSnapshot = cached(DhmzFile.SEA_TEMPERATURE) { SeaTemperatureParser.parse(it) }
 
-    suspend fun waterTemperatures(): WaterTemperatureSnapshot =
-        cached(DhmzFile.WATER_TEMPERATURE) { WaterTemperatureParser.parse(it) }
+    suspend fun waterTemperatures(): WaterTemperatureSnapshot = cached(DhmzFile.WATER_TEMPERATURE) { WaterTemperatureParser.parse(it) }
 
-    suspend fun snowDepths(): SnowDepthSnapshot =
-        cached(DhmzFile.SNOW_DEPTH) { SnowDepthParser.parse(it) }
+    suspend fun snowDepths(): SnowDepthSnapshot = cached(DhmzFile.SNOW_DEPTH) { SnowDepthParser.parse(it) }
 
-    suspend fun uvIndex(): UvIndexSnapshot =
-        cached(DhmzFile.UV_INDEX) { UvIndexParser.parse(it) }
+    suspend fun uvIndex(): UvIndexSnapshot = cached(DhmzFile.UV_INDEX) { UvIndexParser.parse(it) }
 
-    suspend fun bioForecast(): BioForecast =
-        cached(DhmzFile.BIO_FORECAST) { BioForecastParser.parse(it) }
+    suspend fun bioForecast(): BioForecast = cached(DhmzFile.BIO_FORECAST) { BioForecastParser.parse(it) }
 
-    suspend fun fireDanger(): FireDangerSnapshot =
-        cached(DhmzFile.FIRE_DANGER) { FireDangerParser.parse(it) }
+    suspend fun fireDanger(): FireDangerSnapshot = cached(DhmzFile.FIRE_DANGER) { FireDangerParser.parse(it) }
 
-    suspend fun heatWave(): HeatColdWaveSnapshot =
-        cached(DhmzFile.HEAT_WAVE) { HeatColdWaveParser.parseHeat(it) }
+    suspend fun heatWave(): HeatColdWaveSnapshot = cached(DhmzFile.HEAT_WAVE) { HeatColdWaveParser.parseHeat(it) }
 
-    suspend fun coldWave(): HeatColdWaveSnapshot =
-        cached(DhmzFile.COLD_WAVE) { HeatColdWaveParser.parseCold(it) }
+    suspend fun coldWave(): HeatColdWaveSnapshot = cached(DhmzFile.COLD_WAVE) { HeatColdWaveParser.parseCold(it) }
 
-    suspend fun europeanWeather(): EuropeanWeatherSnapshot =
-        cached(DhmzFile.EUROPE_OBSERVATIONS) { EuropeanWeatherParser.parse(it) }
+    suspend fun europeanWeather(): EuropeanWeatherSnapshot = cached(DhmzFile.EUROPE_OBSERVATIONS) { EuropeanWeatherParser.parse(it) }
 
     suspend fun yesterdayMinTemperatures(): DailyStationMeasurements =
         cached(DhmzFile.MIN_TEMPERATURE) { DailyMeasurementParser.parseMinTemperature(it) }

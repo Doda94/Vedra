@@ -20,26 +20,28 @@ import kotlinx.datetime.LocalDate
  * and `<data>` rows of `<r><c>timestamp</c><c>value</c><c>status</c><c>interpolation</c></r>`.
  */
 object WaterTemperatureParser {
-
     fun parse(xml: String): WaterTemperatureSnapshot {
         val root = parseXml(xml)
-        val series = root.children("timeseries").mapNotNull { ts ->
-            val path = ts.child("basic_data")?.textOf("timeseriesPath") ?: return@mapNotNull null
-            val codes = path.substringAfter("tsm(", "").substringBefore(")").split('/')
-            val readings = ts.child("data")?.children("r").orEmpty().mapNotNull { row ->
-                val cells = row.children("c")
-                val time = cleanText(cells.getOrNull(0)?.text)
-                    ?.let { runCatching { Instant.parse(it) }.getOrNull() }
-                    ?: return@mapNotNull null
-                val value = parseDouble(cells.getOrNull(1)?.text) ?: return@mapNotNull null
-                WaterTemperatureReading(time = time, temperatureC = value)
+        val series =
+            root.children("timeseries").mapNotNull { ts ->
+                val path = ts.child("basic_data")?.textOf("timeseriesPath") ?: return@mapNotNull null
+                val codes = path.substringAfter("tsm(", "").substringBefore(")").split('/')
+                val readings =
+                    ts.child("data")?.children("r").orEmpty().mapNotNull { row ->
+                        val cells = row.children("c")
+                        val time =
+                            cleanText(cells.getOrNull(0)?.text)
+                                ?.let { runCatching { Instant.parse(it) }.getOrNull() }
+                                ?: return@mapNotNull null
+                        val value = parseDouble(cells.getOrNull(1)?.text) ?: return@mapNotNull null
+                        WaterTemperatureReading(time = time, temperatureC = value)
+                    }
+                WaterTemperatureSeries(
+                    groupCode = codes.getOrElse(0) { "" },
+                    stationCode = codes.getOrElse(1) { "" },
+                    readings = readings,
+                )
             }
-            WaterTemperatureSeries(
-                groupCode = codes.getOrElse(0) { "" },
-                stationCode = codes.getOrElse(1) { "" },
-                readings = readings,
-            )
-        }
         return WaterTemperatureSnapshot(series = series)
     }
 }
@@ -53,12 +55,12 @@ object WaterTemperatureParser {
  * `<visina>`/`<vrijednost>`). Re-verify against a real winter file.
  */
 object SnowDepthParser {
-
     fun parse(xml: String): SnowDepthSnapshot {
         val root = parseXml(xml)
         val title = cleanText(root.textOf("naslov")).orEmpty()
-        val stations = root.children("grad").mapNotNull { parseStation(it) } +
-            root.children("postaja").mapNotNull { parseStation(it) }
+        val stations =
+            root.children("grad").mapNotNull { parseStation(it) } +
+                root.children("postaja").mapNotNull { parseStation(it) }
         return SnowDepthSnapshot(
             title = title,
             date = titleDate(title),
@@ -68,13 +70,15 @@ object SnowDepthParser {
     }
 
     private fun parseStation(node: XmlNode): SnowDepth? {
-        val name = cleanText(node.textOf("ime"))
-            ?: cleanText(node.textOf("GradIme"))
-            ?: cleanText(node.attr("ime"))
-            ?: return null
-        val depth = parseDouble(node.textOf("visina"))
-            ?: parseDouble(node.textOf("vrijednost"))
-            ?: parseDouble(node.textOf("snijeg"))
+        val name =
+            cleanText(node.textOf("ime"))
+                ?: cleanText(node.textOf("GradIme"))
+                ?: cleanText(node.attr("ime"))
+                ?: return null
+        val depth =
+            parseDouble(node.textOf("visina"))
+                ?: parseDouble(node.textOf("vrijednost"))
+                ?: parseDouble(node.textOf("snijeg"))
         return SnowDepth(stationName = name, depthCm = depth)
     }
 
@@ -87,5 +91,9 @@ object SnowDepthParser {
 
     /** Extracts the hour from "... u 08 h". */
     private fun titleHour(title: String): Int? =
-        Regex("""u\s+(\d{1,2})\s*h""").find(title)?.groupValues?.get(1)?.let { parseInt(it) }
+        Regex("""u\s+(\d{1,2})\s*h""")
+            .find(title)
+            ?.groupValues
+            ?.get(1)
+            ?.let { parseInt(it) }
 }

@@ -12,11 +12,12 @@ import hr.doda.vedra.domain.sea.SeaTemperatureSnapshot
 
 /** Parses `jadran_h.xml`. */
 object MarineForecastParser {
-
     fun parse(xml: String): MarineForecast {
         val root = parseXml(xml)
-        val texts = root.children("Prognoza_tekst")
-            .mapNotNull { cleanText(it.text) }
+        val texts =
+            root
+                .children("Prognoza_tekst")
+                .mapNotNull { cleanText(it.text) }
         return MarineForecast(
             title = cleanText(root.textOf("Naslov")).orEmpty(),
             warning = cleanText(root.child("Upozorenje")?.textOf("Upozorenje_tekst")),
@@ -29,7 +30,6 @@ object MarineForecastParser {
 
 /** Parses `pomorci.xml`. */
 object SailorsMarineForecastParser {
-
     fun parse(xml: String): SailorsMarineForecast {
         val root = parseXml(xml)
         val titles = root.children("Prognoza_naslov").mapNotNull { cleanText(it.text) }
@@ -47,24 +47,28 @@ object SailorsMarineForecastParser {
 
 /** Parses `more_n.xml`. */
 object SeaTemperatureParser {
-
     fun parse(xml: String): SeaTemperatureSnapshot {
         val root = parseXml(xml)
-        val date = parseDmyDate(root.textOf("Datum"))
-            ?: error("Missing <Datum> in more_n.xml")
+        val date =
+            parseDmyDate(root.textOf("Datum"))
+                ?: error("Missing <Datum> in more_n.xml")
         val rows = root.children("Podatci")
         val header = rows.firstOrNull() ?: error("Missing header row in more_n.xml")
         val termHours = header.children("Termin").mapNotNull { parseInt(it.text) }
 
-        val stations = rows.drop(1).map { row ->
-            val name = cleanText(row.textOf("Postaja")).orEmpty()
-            val readings = row.children("Termin").mapIndexedNotNull { idx, t ->
-                val value = parseDouble(t.text) ?: return@mapIndexedNotNull null
-                val hour = termHours.getOrElse(idx) { idx }
-                hour to value
-            }.toMap()
-            SeaTemperature(stationName = name, readings = readings)
-        }
+        val stations =
+            rows.drop(1).map { row ->
+                val name = cleanText(row.textOf("Postaja")).orEmpty()
+                val readings =
+                    row
+                        .children("Termin")
+                        .mapIndexedNotNull { idx, t ->
+                            val value = parseDouble(t.text) ?: return@mapIndexedNotNull null
+                            val hour = termHours.getOrElse(idx) { idx }
+                            hour to value
+                        }.toMap()
+                SeaTemperature(stationName = name, readings = readings)
+            }
         return SeaTemperatureSnapshot(date = date, termHours = termHours, stations = stations)
     }
 }

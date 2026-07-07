@@ -23,14 +23,15 @@ fun VedraTheme(
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit,
 ) {
-    val colors = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val ctx = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)
+    val colors =
+        when {
+            dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+                val ctx = LocalContext.current
+                if (darkTheme) dynamicDarkColorScheme(ctx) else dynamicLightColorScheme(ctx)
+            }
+            darkTheme -> DarkVedraColors
+            else -> LightVedraColors
         }
-        darkTheme -> DarkVedraColors
-        else      -> LightVedraColors
-    }
 
     MaterialTheme(
         colorScheme = colors,

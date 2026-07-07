@@ -11,28 +11,29 @@ import hr.doda.vedra.domain.observation.WindDirection
 
 /** Parses `europa_n.xml` (current weather across European cities). */
 object EuropeanWeatherParser {
-
     fun parse(xml: String): EuropeanWeatherSnapshot {
         val root = parseXml(xml)
         val termHeader = root.child("DatumTermin")
-        val date = parseDmyDate(termHeader?.textOf("Datum"))
-            ?: error("Missing <Datum> in europa_n.xml")
+        val date =
+            parseDmyDate(termHeader?.textOf("Datum"))
+                ?: error("Missing <Datum> in europa_n.xml")
         val term = parseInt(termHeader?.textOf("Termin")) ?: 0
 
-        val cities = root.children("Grad").map { grad ->
-            val data = grad.child("Podatci")
-            EuropeanCityWeather(
-                name = cleanText(grad.textOf("GradIme")).orEmpty(),
-                temperatureC = parseInt(data?.textOf("Temp")),
-                humidityPct = parseInt(data?.textOf("Vlaga")),
-                pressureHpa = parseDouble(data?.textOf("Tlak")),
-                pressureTendencyHpa = parseDouble(data?.textOf("TlakTend")),
-                windDirection = WindDirection.fromToken(data?.textOf("VjetarSmjer")),
-                windSpeedMs = parseDouble(data?.textOf("VjetarBrzina")),
-                weatherText = cleanText(data?.textOf("Vrijeme")),
-                weatherSymbol = cleanText(data?.textOf("VrijemeZnak")),
-            )
-        }
+        val cities =
+            root.children("Grad").map { grad ->
+                val data = grad.child("Podatci")
+                EuropeanCityWeather(
+                    name = cleanText(grad.textOf("GradIme")).orEmpty(),
+                    temperatureC = parseInt(data?.textOf("Temp")),
+                    humidityPct = parseInt(data?.textOf("Vlaga")),
+                    pressureHpa = parseDouble(data?.textOf("Tlak")),
+                    pressureTendencyHpa = parseDouble(data?.textOf("TlakTend")),
+                    windDirection = WindDirection.fromToken(data?.textOf("VjetarSmjer")),
+                    windSpeedMs = parseDouble(data?.textOf("VjetarBrzina")),
+                    weatherText = cleanText(data?.textOf("Vrijeme")),
+                    weatherSymbol = cleanText(data?.textOf("VrijemeZnak")),
+                )
+            }
         return EuropeanWeatherSnapshot(date = date, termHour = term, cities = cities)
     }
 }

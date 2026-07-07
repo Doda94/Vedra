@@ -13,7 +13,6 @@ import hr.doda.vedra.domain.forecast.RegionalDescriptions
 
 /** Parses `prognoza_danas.xml` and `prognoza_sutra.xml`. */
 object NationalDailyForecastParser {
-
     fun parse(xml: String): NationalDailyForecast {
         val root = parseXml(xml)
         val section = root.child("section") ?: error("Missing <section>")
@@ -33,7 +32,6 @@ object NationalDailyForecastParser {
 
 /** Parses `prognoza_izgledi.xml` (multi-day outlook). */
 object OutlookForecastParser {
-
     fun parse(xml: String): OutlookForecast {
         val root = parseXml(xml)
         val section = root.child("section") ?: error("Missing <section>")
@@ -46,18 +44,24 @@ object OutlookForecastParser {
     }
 }
 
-private fun parseRegion(station: XmlNode, fallbackDate: kotlinx.datetime.LocalDate?): RegionalDailyForecast {
+private fun parseRegion(
+    station: XmlNode,
+    fallbackDate: kotlinx.datetime.LocalDate?,
+): RegionalDailyForecast {
     val key = station.attr("name").orEmpty()
     val params = station.params()
-    val date = parseDdmmyyDate(params["datum"]) ?: fallbackDate
-        ?: error("Region $key has no <param datum>")
-    val regionKey = key.substringBefore(":").let { rest ->
-        if (key.startsWith("hr.izgledi:")) key.substringAfter(":") else rest
-    }
+    val date =
+        parseDdmmyyDate(params["datum"]) ?: fallbackDate
+            ?: error("Region $key has no <param datum>")
+    val regionKey =
+        key.substringBefore(":").let { rest ->
+            if (key.startsWith("hr.izgledi:")) key.substringAfter(":") else rest
+        }
     return RegionalDailyForecast(
         date = date,
-        region = Region.fromKey(regionKey)
-            ?: Region.fromKey(stripOutlookKey(regionKey)),
+        region =
+            Region.fromKey(regionKey)
+                ?: Region.fromKey(stripOutlookKey(regionKey)),
         rawRegionKey = regionKey,
         tempMinC = parseInt(params["Tmn"]),
         tempMaxC = parseInt(params["Tmx"]),
@@ -67,33 +71,34 @@ private fun parseRegion(station: XmlNode, fallbackDate: kotlinx.datetime.LocalDa
     )
 }
 
-private fun stripOutlookKey(s: String): String =
-    s.removePrefix("Kopno").removePrefix("More").trimEnd { it.isDigit() }
+private fun stripOutlookKey(s: String): String = s.removePrefix("Kopno").removePrefix("More").trimEnd { it.isDigit() }
 
-private fun XmlNode.params(): Map<String, String> =
-    children("param").associate { (it.attr("name") ?: "") to (it.attr("value") ?: "") }
+private fun XmlNode.params(): Map<String, String> = children("param").associate { (it.attr("name") ?: "") to (it.attr("value") ?: "") }
 
 /** Parses `regije_danas.xml` (free-form regional descriptions). */
 object RegionalDescriptionsParser {
-
-    private val REGION_TAGS = mapOf(
-        "istocna" to Region.EASTERN,
-        "sredisnja" to Region.CENTRAL,
-        "sjjadran" to Region.NORTHERN_ADRIATIC,
-        "gorska" to Region.MOUNTAINOUS,
-        "dalmacija" to Region.DALMATIA,
-        "istra" to Region.ISTRIA,
-        "sjjadran_more" to Region.NORTHERN_ADRIATIC,
-    )
+    private val REGION_TAGS =
+        mapOf(
+            "istocna" to Region.EASTERN,
+            "sredisnja" to Region.CENTRAL,
+            "sjjadran" to Region.NORTHERN_ADRIATIC,
+            "gorska" to Region.MOUNTAINOUS,
+            "dalmacija" to Region.DALMATIA,
+            "istra" to Region.ISTRIA,
+            "sjjadran_more" to Region.NORTHERN_ADRIATIC,
+        )
 
     fun parse(xml: String): RegionalDescriptions {
         val root = parseXml(xml)
-        val date = ParsingUtils.parseDmyDate(root.textOf("datum"))
-            ?: error("Missing <datum>")
-        val descriptions = REGION_TAGS.mapNotNull { (tag, region) ->
-            val text = cleanText(root.textOf(tag)) ?: return@mapNotNull null
-            region to text
-        }.toMap()
+        val date =
+            ParsingUtils.parseDmyDate(root.textOf("datum"))
+                ?: error("Missing <datum>")
+        val descriptions =
+            REGION_TAGS
+                .mapNotNull { (tag, region) ->
+                    val text = cleanText(root.textOf(tag)) ?: return@mapNotNull null
+                    region to text
+                }.toMap()
         return RegionalDescriptions(date = date, descriptions = descriptions)
     }
 }

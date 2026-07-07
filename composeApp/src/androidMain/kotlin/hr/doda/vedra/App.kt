@@ -26,11 +26,12 @@ fun App() {
             topBar = { TopAppBar(title = { Text("Vedra") }) },
         ) { innerPadding ->
             Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp)
-                    .verticalScroll(rememberScrollState()),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(horizontal = 16.dp)
+                        .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text("Zagreb", style = MaterialTheme.typography.displayMedium)
